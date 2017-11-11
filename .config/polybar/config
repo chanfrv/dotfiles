@@ -1,0 +1,437 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
+;=====================================================
+;
+;   Colors
+;
+;=====================================================
+
+[colors]
+background = #1a1a1a
+focused = #2d6276
+unfocused = #242b2d
+foreground = #ddccbb
+green = #00ff00
+red = #ff0000
+warning = #f5a70a
+yellow = #e3e300
+
+;=====================================================
+;
+;   Top bar
+;
+;=====================================================
+
+[bar/topbar]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 24
+offset-x = 0
+offset-y = 0
+fixed-center = true
+
+overline-size = 0
+overline-color = #151515
+underline-size = 0
+underline-color = #151515
+background = #1a1a1a
+
+border-bottom-size = 0
+border-bottom-color = #333
+
+spacing = 0
+padding-left = 0
+padding-right = 1
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = DejaVuSansMono Nerd Font:size=9:style=Bold;2
+font-1 = Noto:size=9;2
+font-2 = Material Icons:size=9;2
+
+modules-left = i3
+modules-center = date time
+modules-right = xbacklight volume bluetooth battery pkg
+
+tray-position = center
+tray-padding = 10
+tray-detached = false
+tray-offset-y = 0
+tray-maxsize = 16
+tray-transparent = false
+
+cursor-click = pointer
+cursor-scroll = pointer
+
+
+;=====================================================
+;
+;   Bottom bar
+;
+;=====================================================
+
+[bar/botbar]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 26
+offset-x = 0
+offset-y = 0
+fixed-center = true
+bottom = true
+
+overline-size = 0
+overline-color = #151515
+underline-size = 0
+underline-color = #151515
+background = #1a1a1a
+
+border-bottom-size = 0
+border-bottom-color = #333
+
+spacing = 0
+padding-left = 2
+padding-right = 0
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = DejaVuSansMono Nerd Font:size=9:style=Bold;2
+
+modules-left = usb
+modules-center =
+modules-right = vpn wlan eth cpu memory keyboard
+
+tray-position = center
+tray-padding = 10
+tray-detached = false
+tray-offset-y = 0
+tray-maxsize = 16
+tray-transparent = false
+
+cursor-click = pointer
+cursor-scroll = pointer
+
+;=====================================================
+;
+;   Modules
+;
+;=====================================================
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+
+[module/i3]
+type = internal/i3
+format = <label-state>
+index-sort = true
+pin-workspaces = true
+
+label-focused = %index%
+label-focused-background = ${colors.focused}
+label-focused-foreground = ${colors.foreground}
+label-focused-padding = 1
+
+label-unfocused = %index%
+label-unfocused-background = ${colors.unfocused}
+label-unfocused-foreground = ${colors.foreground}
+label-unfocused-padding = 1
+
+label-urgent = %index%
+label-urgent-background = ${colors.red}
+label-urgent-foreground = ${colors.foreground}
+label-urgent-padding = 1
+
+label-visible = %index%
+label-visible-background = ${colors.background}
+label-visible-foreground = #55
+label-visible-padding = 1
+
+
+[module/cpu]
+type = internal/cpu
+interval = 1.0
+
+format = <ramp-coreload><label>
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+label = %percentage:03%%
+
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+;[module/cpu]
+;type = internal/cpu
+;interval = 2
+;label = CPU: %percentage:2%%
+;
+;format-background = ${root.background}
+;format-foreground = ${root.foreground}
+
+
+[module/memory]
+type = internal/memory
+interval = 1
+
+format-prefix = "  "
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+format-margin-top = -5
+
+label = %percentage_used%%
+
+;[module/memory]
+;type = internal/memory
+;interval = 2
+;label = RAM: %percentage_used%%
+;
+;format-background = ${root.background}
+;format-foreground = ${root.foreground}
+
+
+[module/wlan]
+type = internal/network
+interface = wlp6s0
+interval = 2
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+
+label-connected = "  %essid%   %local_ip%   %downspeed:9%   %upspeed:9%"
+label-connected-foreground = ${colors.green}
+label-connected-background = ${colors.background}
+label-disconnected = "  down "
+label-disconnected-foreground = ${colors.red}
+label-disconnected-background = ${colors.background}
+
+;[module/wlan]
+;type = internal/network
+;interface = wlp6s0
+;interval = 2
+;
+;format-connected = <label-connected>
+;label-connected = W: %essid%
+;label-connected-background = ${root.background}
+;label-connected-foreground = ${root.green}
+;label-disconnected = W: down
+;label-disconnected-background = ${root.background}
+;label-disconnected-foreground = ${root.red}
+
+
+[module/eth]
+type = internal/network
+interface = enp7s0
+interval = 0.5
+
+label-connected = "  %local_ip% %downspeed:8%  %upspeed:8% "
+label-connected-foreground = ${colors.green}
+label-connected-background = ${colors.background}
+label-disconnected = "  down "
+label-disconnected-foreground = ${colors.red}
+label-disconnected-background = ${colors.background}
+
+;[module/eth]
+;type = internal/network
+;interface = enp7s0
+;interval = 2
+;
+;label-connected = E: %local_ip%
+;label-connected-background = ${root.background}
+;label-connected-foreground = ${root.green}
+;label-disconnected = E: down
+;label-disconnected-background = ${root.background}
+;label-disconnected-foreground = ${root.red}
+
+
+[module/time]
+type = internal/date
+time = "%H:%M"
+click-left = pkill -USR1 redshift
+interval = 60
+
+label = %time%
+
+format = "<label>"
+
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+
+
+[module/date]
+type = internal/date
+date = "%A %d %b %Y"
+click-left = gsimplecal
+interval = 60
+
+label = %date%
+
+format = "<label>"
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+time-format = %H:%M
+
+format-charging = "  <label-charging> "
+format-charging-background = ${colors.background}
+format-charging-foreground = ${colors.foreground}
+
+format-discharging = "  <label-discharging> "
+format-discharging-background = ${colors.background}
+format-discharging-foreground = ${colors.foreground}
+
+format-full = "  full "
+format-full-background = ${colors.background}
+format-full-foreground = ${colors.green}
+
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = "<ramp>"
+format-foreground = ${colors.foreground}
+
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+;label = "  "
+;
+;bar-width = 8
+;bar-indicator = ""
+;bar-indicator-foreground = ${colors.foreground}
+;bar-indicator-font = 3
+;bar-fill = ─
+;bar-fill-font = 1
+;bar-fill-foreground = #4796b4
+;bar-empty = ─
+;bar-empty-font = 1
+;bar-empty-foreground = ${colors.foreground}
+
+
+[module/volume]
+type = internal/volume
+
+format-muted = "<label-muted>"
+label-muted = 
+format-muted-foreground = ${colors.foreground}
+
+format-volume = "<ramp-volume>"
+format-volume-foreground = ${colors.foreground}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+;format-volume = "<label-volume> <bar-volume> "
+;label-volume = "  "
+;label-volume-foreground = ${colors.foreground}
+;
+;format-muted = "<label-muted>  ──────── "
+;format-muted-foreground = ${colors.red}
+;label-muted = "  "
+;
+;bar-volume-width = 8
+;bar-volume-foreground-0 = ${colors.green}
+;bar-volume-foreground-1 = ${colors.green}
+;bar-volume-foreground-2 = ${colors.green}
+;bar-volume-foreground-3 = ${colors.warning}
+;bar-volume-foreground-4 = ${colors.warning}
+;bar-volume-foreground-5 = ${colors.warning}
+;bar-volume-foreground-6 = ${colors.red}
+;bar-volume-gradient = false
+;bar-volume-indicator = ""
+;bar-volume-indicator-font = 3
+;bar-volume-fill = ─
+;bar-volume-fill-font = 1
+;bar-volume-empty = ─
+;bar-volume-empty-font = 1
+;bar-volume-empty-foreground = ${colors.foreground}
+
+
+[module/keyboard]
+type = internal/xkeyboard
+
+format = <label-layout>
+format-spacing = 0
+
+label-layout = %layout%
+label-layout-padding = 2
+label-layout-background = ${colors.focused}
+label-layout-foreground = ${colors.foreground}
+
+
+[module/pkg]
+type = custom/script
+interval = 1200
+exec = ~/.config/polybar/pkg.sh
+
+label = "%output:0:30%"
+label-foreground = ${colors.foreground}
+
+format-prefix = " "
+format-prefix-foreground = #5b5b5b
+
+
+[module/bluetooth]
+type = custom/script
+interval = 10
+exec = ~/.config/polybar/bluetooth.sh
+
+label = "%output%"
+label-foreground = ${colors.foreground}
+
+format = "<label> "
+
+
+[module/usb]
+type = custom/script
+interval = 10
+exec = ~/.config/polybar/usb_mount.sh
+
+label = "%output:0:80%"
+label-foreground = ${colors.foreground}
+
+format = "<label>"
+
+
+[module/vpn]
+type = custom/script
+exec = pgrep openvpn
+interval = 10
+
+label = vpn
+label-foreground = ${colors.foreground}
+
+format-underline = #268bd2
+format-prefix = " "
+format-prefix-foreground = #5b5b5b
+
+
+; vim:ft=dosini
