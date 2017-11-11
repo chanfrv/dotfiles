@@ -164,7 +164,7 @@ exec --no-startup-id "feh --bg-fill ~/pictures/grand_tour.jpg"
 bindcode 75 exec --no-startup-id "i3lock -ti ~/pictures/wmap.png"
 
 # Change keyboard layout
-bindsym $mod+p exec --no-startup-id "switchkeyboard"
+bindsym $mod+p exec --no-startup-id "~/.config/i3/switchkeyboard.sh"
 
 # No title bar
 new_window 1pixel
