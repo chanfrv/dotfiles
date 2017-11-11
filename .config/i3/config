@@ -160,7 +160,7 @@ bindsym $mod+r mode "resize"
 # Wallpaper (from NASA website 'grand tour poster')
 exec --no-startup-id "feh --bg-fill ~/pictures/grand_tour.jpg"
 
-# start i3lock (i3lock-colors)
+# start i3lock (i3lock-colors) with F9
 bindcode 75 exec --no-startup-id "i3lock -ti ~/pictures/wmap.png"
 
 # Change keyboard layout

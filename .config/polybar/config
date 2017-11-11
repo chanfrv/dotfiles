@@ -110,7 +110,7 @@ font-0 = DejaVuSansMono Nerd Font:size=9:style=Bold;2
 
 modules-left = usb
 modules-center =
-modules-right = vpn wlan eth cpu memory keyboard
+modules-right = wlan eth cpu memory keyboard
 
 tray-position = center
 tray-padding = 10
@@ -128,33 +128,35 @@ cursor-scroll = pointer
 ;
 ;=====================================================
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
-
-
 [module/i3]
 type = internal/i3
-format = <label-state>
+
 index-sort = true
 pin-workspaces = true
 
-label-focused = %index%
+format = <label-state>
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+label-focused = " %name% "
 label-focused-background = ${colors.focused}
 label-focused-foreground = ${colors.foreground}
 label-focused-padding = 1
 
-label-unfocused = %index%
+label-unfocused = " %name% "
 label-unfocused-background = ${colors.unfocused}
 label-unfocused-foreground = ${colors.foreground}
 label-unfocused-padding = 1
 
-label-urgent = %index%
+label-urgent = " %name% "
 label-urgent-background = ${colors.red}
 label-urgent-foreground = ${colors.foreground}
 label-urgent-padding = 1
 
-label-visible = %index%
+label-visible = " %name% "
 label-visible-background = ${colors.background}
 label-visible-foreground = #55
 label-visible-padding = 1
@@ -179,14 +181,6 @@ ramp-coreload-5 = ▆
 ramp-coreload-6 = ▇
 ramp-coreload-7 = █
 
-;[module/cpu]
-;type = internal/cpu
-;interval = 2
-;label = CPU: %percentage:2%%
-;
-;format-background = ${root.background}
-;format-foreground = ${root.foreground}
-
 
 [module/memory]
 type = internal/memory
@@ -199,14 +193,6 @@ format-margin-top = -5
 
 label = %percentage_used%%
 
-;[module/memory]
-;type = internal/memory
-;interval = 2
-;label = RAM: %percentage_used%%
-;
-;format-background = ${root.background}
-;format-foreground = ${root.foreground}
-
 
 [module/wlan]
 type = internal/network
@@ -216,50 +202,25 @@ interval = 2
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
 
-label-connected = "  %essid%   %local_ip%   %downspeed:9%   %upspeed:9%"
+label-connected = "  %essid%   %local_ip%   %downspeed:9%   %upspeed:9% "
 label-connected-foreground = ${colors.green}
 label-connected-background = ${colors.background}
 label-disconnected = "  down "
 label-disconnected-foreground = ${colors.red}
 label-disconnected-background = ${colors.background}
 
-;[module/wlan]
-;type = internal/network
-;interface = wlp6s0
-;interval = 2
-;
-;format-connected = <label-connected>
-;label-connected = W: %essid%
-;label-connected-background = ${root.background}
-;label-connected-foreground = ${root.green}
-;label-disconnected = W: down
-;label-disconnected-background = ${root.background}
-;label-disconnected-foreground = ${root.red}
-
 
 [module/eth]
 type = internal/network
 interface = enp7s0
-interval = 0.5
+interval = 2
 
-label-connected = "  %local_ip% %downspeed:8%  %upspeed:8% "
+label-connected = "  %local_ip%   %downspeed:9%   %upspeed:9% "
 label-connected-foreground = ${colors.green}
 label-connected-background = ${colors.background}
 label-disconnected = "  down "
 label-disconnected-foreground = ${colors.red}
 label-disconnected-background = ${colors.background}
-
-;[module/eth]
-;type = internal/network
-;interface = enp7s0
-;interval = 2
-;
-;label-connected = E: %local_ip%
-;label-connected-background = ${root.background}
-;label-connected-foreground = ${root.green}
-;label-disconnected = E: down
-;label-disconnected-background = ${root.background}
-;label-disconnected-foreground = ${root.red}
 
 
 [module/time]
@@ -322,19 +283,6 @@ ramp-2 = 🌓
 ramp-3 = 🌒
 ramp-4 = 🌑
 
-;label = "  "
-;
-;bar-width = 8
-;bar-indicator = ""
-;bar-indicator-foreground = ${colors.foreground}
-;bar-indicator-font = 3
-;bar-fill = ─
-;bar-fill-font = 1
-;bar-fill-foreground = #4796b4
-;bar-empty = ─
-;bar-empty-font = 1
-;bar-empty-foreground = ${colors.foreground}
-
 
 [module/volume]
 type = internal/volume
@@ -348,31 +296,6 @@ format-volume-foreground = ${colors.foreground}
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-
-;format-volume = "<label-volume> <bar-volume> "
-;label-volume = "  "
-;label-volume-foreground = ${colors.foreground}
-;
-;format-muted = "<label-muted>  ──────── "
-;format-muted-foreground = ${colors.red}
-;label-muted = "  "
-;
-;bar-volume-width = 8
-;bar-volume-foreground-0 = ${colors.green}
-;bar-volume-foreground-1 = ${colors.green}
-;bar-volume-foreground-2 = ${colors.green}
-;bar-volume-foreground-3 = ${colors.warning}
-;bar-volume-foreground-4 = ${colors.warning}
-;bar-volume-foreground-5 = ${colors.warning}
-;bar-volume-foreground-6 = ${colors.red}
-;bar-volume-gradient = false
-;bar-volume-indicator = ""
-;bar-volume-indicator-font = 3
-;bar-volume-fill = ─
-;bar-volume-fill-font = 1
-;bar-volume-empty = ─
-;bar-volume-empty-font = 1
-;bar-volume-empty-foreground = ${colors.foreground}
 
 
 [module/keyboard]
@@ -420,18 +343,6 @@ label-foreground = ${colors.foreground}
 
 format = "<label>"
 
-
-[module/vpn]
-type = custom/script
-exec = pgrep openvpn
-interval = 10
-
-label = vpn
-label-foreground = ${colors.foreground}
-
-format-underline = #268bd2
-format-prefix = " "
-format-prefix-foreground = #5b5b5b
 
 
 ; vim:ft=dosini
