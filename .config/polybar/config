@@ -336,7 +336,7 @@ format = "<label> "
 [module/usb]
 type = custom/script
 interval = 10
-exec = ~/.config/polybar/usb_mount.sh
+exec = ~/.config/polybar/usb.sh
 
 label = "%output:0:80%"
 label-foreground = ${colors.foreground}
