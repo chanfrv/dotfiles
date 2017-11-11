@@ -336,7 +336,8 @@ format = "<label> "
 [module/usb]
 type = custom/script
 interval = 10
-exec = ~/.config/polybar/usb.sh
+exec = ~/.config/polybar/usb.sh /media/
+click-left = udiskie-umount -a
 
 label = "%output:0:80%"
 label-foreground = ${colors.foreground}
