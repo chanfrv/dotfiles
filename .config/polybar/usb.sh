@@ -4,7 +4,7 @@ sym=""
 dir="/media"
 
 if [ $# -ne 0 ]; then
-  dir="$1"
+  dir="${1%/}"
 fi
 
 for f in `ls $dir`; do

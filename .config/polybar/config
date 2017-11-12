@@ -256,13 +256,17 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-time-format = %H:%M
-
 format-charging = "  <label-charging> "
 format-charging-background = ${colors.background}
 format-charging-foreground = ${colors.foreground}
 
-format-discharging = "  <label-discharging> "
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+format-discharging = " <ramp-capacity> <label-discharging> "
 format-discharging-background = ${colors.background}
 format-discharging-foreground = ${colors.foreground}
 
@@ -335,15 +339,15 @@ format = "<label> "
 
 [module/usb]
 type = custom/script
-interval = 10
-exec = ~/.config/polybar/usb.sh /media/
+interval = 5
+; Displays the devices in the bar
+exec = ~/.config/polybar/usb.sh
+; Execute the script if udiskie is runned
+exec-if = pgrep -x udiskie
+
 click-left = udiskie-umount -a
 
-label = "%output:0:80%"
 label-foreground = ${colors.foreground}
-
-format = "<label>"
-
 
 
 ; vim:ft=dosini
