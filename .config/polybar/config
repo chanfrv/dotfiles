@@ -345,7 +345,7 @@ exec = ~/.config/polybar/usb.sh
 ; Execute the script if udiskie is runned
 exec-if = pgrep -x udiskie
 
-click-left = udiskie-umount -a
+click-left = udiskie-umount --detach -a
 
 label-foreground = ${colors.foreground}
 
