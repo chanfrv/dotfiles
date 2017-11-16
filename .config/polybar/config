@@ -202,7 +202,7 @@ interval = 2
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
 
-label-connected = "  %essid%   %local_ip%   %downspeed:9%   %upspeed:9% "
+label-connected = "  %essid%   %local_ip%   %downspeed:9%   %upspeed:9%"
 label-connected-foreground = ${colors.green}
 label-connected-background = ${colors.background}
 label-disconnected = "  down "
@@ -215,7 +215,7 @@ type = internal/network
 interface = enp7s0
 interval = 2
 
-label-connected = "  %local_ip%   %downspeed:9%   %upspeed:9% "
+label-connected = "  %local_ip%   %downspeed:9%   %upspeed:9%"
 label-connected-foreground = ${colors.green}
 label-connected-background = ${colors.background}
 label-disconnected = "  down "

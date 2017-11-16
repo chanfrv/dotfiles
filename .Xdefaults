@@ -8,6 +8,7 @@ xft.hintstyle: hintslight
 
 ! URxvt
 ! ------------------------------------------------------
+! https://github.com/ryanoasis/nerd-fonts + 'fc-cache -vf'
 URxvt*font: xft:DejaVuSansMono Nerd Font:size=9:style=Book,xft:Noto:size=9,xft:Material Icons:style=Regular:size=9
 URxvt.letterSpace: 0
 

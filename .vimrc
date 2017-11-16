@@ -49,7 +49,7 @@ set statusline+=%#warningmsg#
 set statusline+=%m
 set statusline+=%*
 
-set statusline+=%{fugitive#statusline()}
+set statusline+=%{fugitive#statusline()} "
 
 set statusline+=%h      "help file flag
 set statusline+=%y      "filetype
@@ -197,6 +197,7 @@ endfunction
 
 " Plugins Vundle
 " ------------------------------------------------------------------------------
+" https://aur.archlinux.org/vundle.git
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
