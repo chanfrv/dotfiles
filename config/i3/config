@@ -161,11 +161,11 @@ bindsym $mod+r mode "resize"
 # https://www.jpl.nasa.gov/visions-of-the-future/
 exec --no-startup-id "feh --bg-fill ~/pictures/grand_tour.jpg"
 
-# start i3lock (i3lock-colors) with F9
+# start i3lock with F9
 # https://github.com/eBrnd/i3lock-color
 bindcode 75 exec --no-startup-id "i3lock -ti ~/pictures/wmap.png"
 
-# Change keyboard layout
+# Change keyboard layout with $mod + p
 # Init us
 exec --no-startup-id "setxkbmap us"
 # custom script
@@ -189,7 +189,7 @@ exec --no-startup-id "xautolock -time 15 -locker 'i3lock -ti ~/pictures/wmap.png
 # https://aur.archlinux.org/mons.git
 exec --no-startup-id "mons -am"
 
-# udiskie (auto mount usb)
+# auto mount usb
 # https://wiki.archlinux.org/index.php/Udisks
 exec --no-startup-id "udiskie -aNTF"
 
