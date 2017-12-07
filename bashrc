@@ -10,6 +10,10 @@ alias ls='ls --color=auto'
 alias reboot='udiskie-umount -a && reboot'
 alias poweroff='udiskie-umount -a && poweroff'
 
+alias gitlist='git ls-tree -r master --name-only'
+alias gitgraph='git log --graph --oneline'
+
+
 # exports
 ps1_b="\[\e[36m\]"
 ps1_g="\[\e[32m\]"
