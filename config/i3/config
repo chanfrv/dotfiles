@@ -84,10 +84,10 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -165,11 +165,11 @@ exec --no-startup-id "feh --bg-fill ~/pictures/grand_tour.jpg"
 # https://github.com/eBrnd/i3lock-color
 bindcode 75 exec --no-startup-id "i3lock -ti ~/pictures/wmap.png"
 
-# Change keyboard layout with $mod + p
+# Change keyboard layout with $mod+space
 # Init us
 exec --no-startup-id "setxkbmap us"
 # custom script
-bindsym $mod+p exec --no-startup-id "~/.config/i3/switchkeyboard.sh"
+bindsym $mod+space exec --no-startup-id "~/.config/i3/switchkeyboard.sh"
 
 # No title bar
 new_window 1pixel

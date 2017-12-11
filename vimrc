@@ -6,7 +6,7 @@ set backspace=indent,eol,start
 filetype off
 set background=dark
 set history=2000
-set number
+"set number
 
 " Indentation
 set autoindent
@@ -219,7 +219,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_remove_include_errors = 1
-let g:syntastic_c_compiler_options= '-Wall -Werror -Wextra -pedantic -std=c99'
+let g:syntastic_c_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c99 -D_DEFAULT_SOURCE'
 
 highlight link SyntasticErrorLine error
 highlight link SyntasticWarningLine todo
