@@ -71,9 +71,9 @@ main()
     echo $f
   done
 
-  echo    "To definitively add tracked file, please add then in \`DOTS\'"
+  echo -e "\nTo definitively add tracked file, please add then in 'DOTS'"
   echo -e "directly by editing this script.\n"
-  echo -e "\nTo copy your tracked file, press 1."
+  echo    "To copy your tracked file, press 1."
   echo    "To temporary add tracked files, press 2."
   echo -e "To abort the copy, press 3.\n"
   echo    "Congratulations, your are the 1000th to open this script!"
