@@ -5,7 +5,7 @@ set encoding=utf-8
 set backspace=indent,eol,start
 filetype off
 set background=dark
-set history=2000
+set history=5000
 "set number
 
 " Indentation
@@ -217,9 +217,11 @@ let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-"let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_remove_include_errors = 1
-let g:syntastic_c_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c99 -D_DEFAULT_SOURCE'
+let g:syntastic_c_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c99'
+let g:syntastic_cpp_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c++17'
+
 
 highlight link SyntasticErrorLine error
 highlight link SyntasticWarningLine todo

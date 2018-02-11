@@ -33,25 +33,8 @@ URxvt.url-select.launcher: firefox
 URxvt.url-select.underline: true
 
 ! Magic
-URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.keysym.Shift-Control-C: perl:clipboard:copy
-
-
-! XTerm
-! ------------------------------------------------------
-XTerm*locale: true
-XTerm.letterSpace: 0
-Xterm*autoWrap: false
-
-XTerm*font: xft:DejaVu Sans Mono for Powerline:pixelsize=13
-XTerm*font1: xft:FontAwesome:pixelsize=13
-
-! Clipboard
-<Btn1up>: select-end(PINARY, CLIPBOARD, CUT_BUFFER0)
-XTerm*VT100.Translations: #override \
-    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
-    Ctrl Shift <Key>V: insert-selection(CLIPBOARD)
-
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 ! Nice colorscheme
 ! ------------------------------------------------------

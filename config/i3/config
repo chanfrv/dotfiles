@@ -159,11 +159,11 @@ bindsym $mod+r mode "resize"
 # ---------------------------------------
 # Wallpaper
 # https://www.jpl.nasa.gov/visions-of-the-future/
-exec --no-startup-id "feh --bg-fill ~/pictures/grand_tour.jpg"
+exec --no-startup-id "feh --bg-fill ~/Pictures/grand_tour.jpg"
 
 # start i3lock with F9
 # https://github.com/eBrnd/i3lock-color
-bindcode 75 exec --no-startup-id "i3lock -ti ~/pictures/wmap.png"
+bindcode 75 exec --no-startup-id "i3lock -ti ~/Pictures/wmap.png"
 
 # Change keyboard layout with $mod+space
 # Init us
@@ -183,7 +183,7 @@ exec --no-startup-id redshift
 exec --no-startup-id numlockx
 
 # xautolock
-exec --no-startup-id "xautolock -time 15 -locker 'i3lock -ti ~/pictures/wmap.png'"
+#exec --no-startup-id "xautolock -time 15 -locker 'i3lock -ti ~/Pictures/wmap.png'"
 
 # automatic monitors
 # https://aur.archlinux.org/mons.git
@@ -196,3 +196,6 @@ exec --no-startup-id "udiskie -aNTF"
 # Launch polybar
 # https://github.com/jaagr/polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# Auto update
+exec --no-startup-id "yes | sudo pacman -Syu"
