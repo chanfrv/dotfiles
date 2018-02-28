@@ -32,7 +32,6 @@ copy()
   exit 0
 }
 
-
 add_files()
 {
   echo "Enter the files separated with a space."
