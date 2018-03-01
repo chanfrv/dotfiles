@@ -9,6 +9,9 @@
 # aliases
 #
 
+# pacman
+alias update="yes | sudo pacman -Syu"
+
 # ls
 alias ls='ls --color=auto'
 
@@ -20,6 +23,7 @@ alias poweroff='udiskie-umount -a && poweroff'
 alias git-list='git ls-tree -r master --name-only'
 alias git-graph='git log --graph --oneline'
 alias git-count='git shortlog -ens'
+#git-stats
 
 #
 # exports

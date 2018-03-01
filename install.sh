@@ -29,6 +29,22 @@ copy()
     echo "Copy of $opath to $dpath..."
     cp -r "$opath" "$dpath"
   done
+
+  git diff --exit-code
+  if [ $? -ne 0 ]; then
+    git add *
+    echo "Your files have been updated."
+    echo "The default commit is \`dotfiles: update'"
+    echo "Enter the commit or press enter to keep the default one."
+    read line
+    commit="dotfiles: update"
+    if [ -z $line ]; then
+      commit=$line
+    fi
+    git commit -m \"$commit\"
+  fi
+
+  echo "Nothing to commit, exiting."
   exit 0
 }
 
