@@ -65,7 +65,7 @@ add_files()
 coward()
 {
   echo "Coward."
-  exit 2
+  exit 28
 }
 
 #
@@ -82,6 +82,7 @@ you_have_been_bamboozled()
 main()
 {
   echo -e "=== You are on install.sh script. ===\n"
+
   echo "Here are the tracked dotfiles:"
   for f in $DOTS; do
     echo $f
@@ -99,17 +100,24 @@ main()
   echo -n "> "
   read line
   echo
-  if [ "$line" == "1" ]; then
+
+  case $line in
+  "1")
     copy
-  elif [ "$line" == "2" ]; then
+    ;;
+  "2")
     add_files
-  elif [ "$line" == "3" ]; then
+    ;;
+  "3")
     coward
-  elif [ "${line:0:1}" == "#" ]; then
+    ;;
+  "#"*)
     you_have_been_bamboozled
-  else
+    ;;
+  *)
     exit 1
-  fi
+    ;;
+  esac
 }
 
 main
