@@ -38,10 +38,12 @@ copy()
     echo "Enter the commit or press enter to keep the default one."
     read line
     commit="dotfiles: update"
-    if [ -z $line ]; then
+    if [ ! -z $line ]; then
       commit=$line
     fi
-    git commit -m \"$commit\"
+    git commit -m "$commit"
+
+    exit 0
   fi
 
   echo "Nothing to commit, exiting."
