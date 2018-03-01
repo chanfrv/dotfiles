@@ -4,7 +4,7 @@
 # Usage
 #
 if [ $# -ne 0 ]; then
-  echo "Usage: ./install.sh"
+  echo "Usage: $0"
   exit 1
 fi
 
@@ -87,7 +87,8 @@ main()
     echo $f
   done
 
-  echo -e "\nTo definitively add tracked file, please add then in 'DOTS'"
+  # Bullshit everywhere
+  echo -e "\nTo definitively add tracked file, please add them in 'DOTS'"
   echo -e "directly by editing this script.\n"
   echo    "To copy your tracked file, press 1."
   echo    "To temporary add tracked files, press 2."
