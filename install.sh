@@ -37,6 +37,7 @@ copy()
     echo -e "Enter the commit or left empty to send \`$commit'.\n"
     echo -n "> "
     read line
+    echo
     if [ ! -z "$line" ]; then
       commit=$line
     fi
