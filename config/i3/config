@@ -183,6 +183,7 @@ exec --no-startup-id redshift
 exec --no-startup-id numlockx
 
 # xautolock
+# Usefull but anoying
 #exec --no-startup-id "xautolock -time 15 -locker 'i3lock -ti ~/Pictures/wmap.png'"
 
 # automatic monitors
@@ -196,6 +197,3 @@ exec --no-startup-id "udiskie -aNTF"
 # Launch polybar
 # https://github.com/jaagr/polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
-# Auto update
-#exec --no-startup-id "yes | sudo pacman -Syu"
