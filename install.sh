@@ -36,10 +36,10 @@ copy()
     commit="dotfiles: update"
     echo    "Your files have been updated."
     echo    "The default commit is \`$commit'"
-    echo    "Enter the commit or press enter to keep the default one."
+    echo -e "Enter the commit or press enter to keep the default one.\n"
     echo -n "> "
     read line
-    if [ ! -z $line ]; then
+    if [ ! -z "$line" ]; then
       commit=$line
     fi
     git commit -m "$commit"
@@ -53,8 +53,7 @@ copy()
 
 add_files()
 {
-  echo "Enter the files separated with a space."
-
+  echo -e "Enter the files separated with a space.\n"
   echo -n "> "
   read line
   echo
