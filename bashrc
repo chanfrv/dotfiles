@@ -38,3 +38,21 @@ export PS1="[${ps1_b}\u${ps1_0}@${ps1_g}\h${ps1_0} \W]${ps1_r}\$?${ps1_0}$ "
 
 # editor
 export EDITOR=vim
+
+# postgreSQL
+export PGDATA="$HOME/postgres_data"
+#------------#
+#   HOW TO   #
+#------------#
+#- Init DB
+#initdb --locale "$LANG" -E UTF8
+#- Launch server
+#postgres -D "$PGDATA" -k /tmp
+#- Connect
+#psql -h localhost postgres
+#- Create DB
+#postgres=# ALTER ROLE login SUPERUSER;
+#postgres=# CREATE DATABASE name OWNER login;
+#postgres=# \q
+#- Launch interactive shell
+#psql -h localhost -d j4_tutorial

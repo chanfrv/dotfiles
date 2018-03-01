@@ -34,9 +34,7 @@ copy()
   if [ $? -ne 0 ]; then
     git add *
     commit="dotfiles: update"
-    echo    "Your files have been updated."
-    echo    "The default commit is \`$commit'"
-    echo -e "Enter the commit or press enter to keep the default one.\n"
+    echo -e "Enter the commit or left empty to send \`$commit'.\n"
     echo -n "> "
     read line
     if [ ! -z "$line" ]; then
