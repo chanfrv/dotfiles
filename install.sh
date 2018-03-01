@@ -42,7 +42,7 @@ copy()
       commit=$line
     fi
     git commit -m "$commit"
-
+    git push
     exit 0
   fi
 
