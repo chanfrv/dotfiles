@@ -33,9 +33,10 @@ copy()
   git diff --exit-code
   if [ $? -ne 0 ]; then
     git add *
-    echo "Your files have been updated."
-    echo "The default commit is \`dotfiles: update'"
-    echo "Enter the commit or press enter to keep the default one."
+    echo    "Your files have been updated."
+    echo    "The default commit is \`dotfiles: update'"
+    echo    "Enter the commit or press enter to keep the default one."
+    echo -n "> "
     read line
     commit="dotfiles: update"
     if [ ! -z $line ]; then
