@@ -81,11 +81,11 @@ you_have_been_bamboozled()
 
 main()
 {
-  echo -e "=== You are on install.sh script. ===\n"
+  echo -e "=== Welcome to install.sh script. This is not a scam. ===\n"
 
   echo "Here are the tracked dotfiles:"
   for f in $DOTS; do
-    echo $f
+    echo "- $f"
   done
 
   # Bullshit everywhere
