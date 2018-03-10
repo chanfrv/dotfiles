@@ -6,6 +6,7 @@ set backspace=indent,eol,start
 filetype off
 set background=dark
 set history=5000
+set mouse=a
 "set number
 
 " Indentation
