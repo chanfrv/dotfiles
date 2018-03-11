@@ -31,3 +31,5 @@ numlockx
 xautolock
 
 [Mons](https://github.com/Ventto/mons)
+
+awk
