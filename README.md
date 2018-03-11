@@ -3,33 +3,46 @@
 ## Directory Tree
 ```
 .
-./config/
-./config/i3/*
-./config/polybar/*
 ./bashrc
-./vimrc
 ./Xresources
+./install.sh
+./.gitignore
+./vimrc
+./git-stats
+./config
+./config/i3
+./config/i3/switchkeyboard.sh
+./config/i3/config
+./config/polybar
+./config/polybar/launch.sh
+./config/polybar/bluetooth.sh
+./config/polybar/usb.sh
+./config/polybar/config
+./config/polybar/pkg.sh
+./README.md
 ```
 ## Prerequisites
 
-[Polybar](https://github.com/jaagr/polybar)
+[Polybar](https://github.com/jaagr/polybar) -- Status bar which replace i3bar
 
-[Udiskie](https://github.com/coldfix/udiskie)
+[Udiskie](https://github.com/coldfix/udiskie) -- Removable devices management
 
-[Vundle](https://github.com/VundleVim/Vundle.vim)
+[Vundle](https://github.com/VundleVim/Vundle.vim) -- Vim plugins management
 
-[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts)
+[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) -- Add most of the symbols for the fonts
 
-feh
+i3 -- Window manager
 
-i3lock
+feh -- Image viewer
 
-redshift
+i3lock -- Lock screen for i3
 
-numlockx
+redshift -- Change screen luminosity and colors
 
-xautolock
+numlockx -- Activates `Num Lock' on startup
 
-[Mons](https://github.com/Ventto/mons)
+xautolock -- Automatic lock
 
-awk
+[Mons](https://github.com/Ventto/mons) -- Multi-monitors, projector manager
+
+awk -- Pattern scanning and processing language
