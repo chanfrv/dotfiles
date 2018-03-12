@@ -5,21 +5,10 @@
 .
 ./bashrc
 ./Xresources
-./install.sh
-./.gitignore
 ./vimrc
 ./git-stats
-./config
-./config/i3
-./config/i3/switchkeyboard.sh
-./config/i3/config
-./config/polybar
-./config/polybar/launch.sh
-./config/polybar/bluetooth.sh
-./config/polybar/usb.sh
-./config/polybar/config
-./config/polybar/pkg.sh
-./README.md
+./config/i3/
+./config/polybar/
 ```
 ## Prerequisites
 
