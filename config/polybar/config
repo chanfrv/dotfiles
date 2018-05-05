@@ -11,7 +11,6 @@
 margin-top = 5
 margin-bottom = 5
 
-
 ;=====================================================
 ;
 ;   Colors
@@ -23,7 +22,7 @@ background = #1a1a1a
 focused = #2d6276
 unfocused = #242b2d
 foreground = #ddccbb
-green = #00ff00
+green = #38b21c
 red = #ff0000
 warning = #f5a70a
 yellow = #e3e300
@@ -37,87 +36,33 @@ yellow = #e3e300
 [bar/topbar]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 26
+height = 32
 offset-x = 0
 offset-y = 0
 fixed-center = true
 
-overline-size = 0
+overline-size = 1
 overline-color = #151515
-underline-size = 0
+underline-size = 3
 underline-color = #151515
 background = #1a1a1a
 
 border-bottom-size = 0
 border-bottom-color = #333
 
-spacing = 0
+spacing = 1
 padding-left = 0
 padding-right = 0
-module-margin-left = 1
-module-margin-right = 1
+module-margin-left = 0
+module-margin-right = 0
 
-font-0 = DejaVuSansMono Nerd Font:size=9:style=Bold;2
-font-1 = Noto:size=10;2
-font-2 = Material Icons:size=10;3
+font-0 = Noto:size=10;1
+font-1 = DejaVuSansMono Nerd Font:size=11;2
+font-2 = Material Icons:size=12;3
 
 modules-left = i3 usb
-modules-center = date time
-modules-right = wlan eth xbacklight volume bluetooth battery pkg keyboard
-
-tray-position = center
-tray-padding = 10
-tray-detached = false
-tray-offset-y = 0
-tray-maxsize = 16
-tray-transparent = false
-
-cursor-click = pointer
-cursor-scroll = pointer
-
-
-;=====================================================
-;
-;   Bottom bar
-;
-;=====================================================
-
-[bar/botbar]
-;monitor = ${env:MONITOR:HDMI-1}
-width = 100%
-height = 26
-offset-x = 0
-offset-y = 0
-fixed-center = true
-bottom = true
-
-overline-size = 0
-overline-color = #151515
-underline-size = 0
-underline-color = #151515
-background = #1a1a1a
-
-border-bottom-size = 0
-border-bottom-color = #333
-
-spacing = 0
-padding-left = 2
-padding-right = 0
-module-margin-left = 1
-module-margin-right = 1
-
-font-0 = DejaVuSansMono Nerd Font:size=9:style=Bold;2
-
-modules-left = usb
-modules-center =
-modules-right = wlan eth cpu memory keyboard
-
-tray-position = center
-tray-padding = 10
-tray-detached = false
-tray-offset-y = 0
-tray-maxsize = 16
-tray-transparent = false
+modules-center = 
+modules-right = xbacklight volume bluetooth battery wlan eth date keyboard
 
 cursor-click = pointer
 cursor-scroll = pointer
@@ -134,32 +79,44 @@ type = internal/i3
 index-sort = true
 pin-workspaces = true
 
-format = <label-state>
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-default = 
+
+format = <label-state> <label-mode>
 
 ; Available tokens:
 ;   %name%
 ;   %icon%
 ;   %index%
 ;   %output%
-label-focused = " %name% "
+label-focused = "%icon%"
 label-focused-background = ${colors.focused}
 label-focused-foreground = ${colors.foreground}
-label-focused-padding = 1
+label-focused-padding = 4
 
-label-unfocused = " %name% "
-label-unfocused-background = ${colors.unfocused}
+label-unfocused = "%icon%"
+;label-unfocused-background = ${colors.unfocused}
+label-unfocused-background = ${colors.background}
 label-unfocused-foreground = ${colors.foreground}
-label-unfocused-padding = 1
+label-unfocused-padding = 4
 
-label-urgent = " %name% "
+label-urgent = "%icon%"
 label-urgent-background = ${colors.red}
 label-urgent-foreground = ${colors.foreground}
-label-urgent-padding = 1
+label-urgent-padding = 4
 
-label-visible = " %name% "
+label-visible = "%icon%"
 label-visible-background = ${colors.background}
 label-visible-foreground = #55
-label-visible-padding = 1
+label-visible-padding = 4
 
 
 [module/cpu]
@@ -169,6 +126,7 @@ interval = 1.0
 format = <ramp-coreload><label>
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
+format-padding = 4
 
 label = %percentage:03%%
 
@@ -190,6 +148,7 @@ format-prefix = "  "
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 format-margin-top = -5
+format-padding = 4
 
 label = %percentage_used%%
 
@@ -199,56 +158,57 @@ type = internal/network
 interface = wlp6s0
 interval = 2
 
-format-connected = <label-connected>
-format-disconnected = <label-disconnected>
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
 
-label-connected = " %local_ip% (%essid%)"
+format-connected = "<ramp-signal> <label-connected>"
+format-connected-underline = ${colors.focused}
+format-disconnected = <label-disconnected>
+format-padding = 4
+
+label-connected = %essid% (%local_ip%)
 label-connected-foreground = ${colors.foreground}
 label-connected-background = ${colors.background}
-label-disconnected = " Down"
+
+label-disconnected =
 label-disconnected-foreground = ${colors.foreground}
 label-disconnected-background = ${colors.background}
-
 
 [module/eth]
 type = internal/network
 interface = enp7s0
 interval = 2
 
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+format-padding = 3
+
 label-connected = " %local_ip%"
 label-connected-foreground = ${colors.foreground}
 label-connected-background = ${colors.background}
-label-disconnected = " Down"
+format-connected-underline = ${colors.focused}
+
+label-disconnected =
 label-disconnected-foreground = ${colors.foreground}
 label-disconnected-background = ${colors.background}
 
-
-[module/time]
-type = internal/date
-time = "%H:%M"
-click-left = pkill -USR1 redshift
-interval = 60
-
-label = %time%
-
-format = "<label>"
-
-format-background = ${colors.background}
-format-foreground = ${colors.foreground}
-
-
 [module/date]
 type = internal/date
-date = "%A %d %b %Y"
-click-left = gsimplecal
-interval = 60
 
-label = %date%
+date = "%a %d %b"
+time = %H:%M
+date-alt = %a %b %d %Y
+time-alt = %H:%M:%S
 
-format = "<label>"
+label = %date%, %time%
+
+format = "  <label>"
 format-background = ${colors.background}
 format-foreground = ${colors.foreground}
+format-padding = 4
 
+interval = 60
 
 [module/battery]
 type = internal/battery
@@ -256,30 +216,48 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-format-charging = "  <label-charging> "
-format-charging-background = ${colors.background}
-format-charging-foreground = ${colors.foreground}
-
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
 
-format-discharging = " <ramp-capacity> <label-discharging> "
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = full
+
+format-charging = "<animation-charging> <label-charging>"
+format-charging-background = ${colors.background}
+format-charging-foreground = ${colors.foreground}
+format-charging-padding = 4
+
+format-discharging = "<ramp-capacity> <label-discharging>"
 format-discharging-background = ${colors.background}
 format-discharging-foreground = ${colors.foreground}
+format-discharging-padding = 4
 
-format-full = "  full "
+format-full = " <label-full>"
 format-full-background = ${colors.background}
 format-full-foreground = ${colors.green}
+format-full-underline = ${colors.green}
+format-full-padding = 4
 
 
 [module/xbacklight]
 type = internal/xbacklight
 
-format = "<ramp>"
+label = %percentage%%
+
+format = "<ramp> <label>"
 format-foreground = ${colors.foreground}
+format-padding = 4
 
 ramp-0 = 🌕
 ramp-1 = 🌔
@@ -291,53 +269,55 @@ ramp-4 = 🌑
 [module/volume]
 type = internal/volume
 
-format-muted = "<label-muted>"
-label-muted = 
+label-muted = %percentage%%
+
+format-muted = "  <label-muted>"
 format-muted-foreground = ${colors.foreground}
 
-format-volume = "<ramp-volume>"
+label-volume = %percentage%%
+
+format-volume = "<ramp-volume> <label-volume>"
 format-volume-foreground = ${colors.foreground}
+
+format-padding = 4
+
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-
+ramp-headphones-0 = 
 
 [module/keyboard]
 type = internal/xkeyboard
 
 format = <label-layout>
-format-spacing = 0
 
 label-layout = %layout%
-label-layout-padding = 2
+label-layout-padding = 3
 label-layout-background = ${colors.focused}
 label-layout-foreground = ${colors.foreground}
 
-
 [module/pkg]
 type = custom/script
-interval = 1200
+interval = 60
 exec = ~/.config/polybar/pkg.sh
-
-click-left = yes | sudo pacman -Syu
 
 label = "%output:0:30%"
 label-foreground = ${colors.foreground}
 
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = #5b5b5b
-
+format-padding = 4
 
 [module/bluetooth]
 type = custom/script
 interval = 10
 exec = ~/.config/polybar/bluetooth.sh
 
-label = "%output%"
+label = "  %output%"
 label-foreground = ${colors.foreground}
 
-format = "<label> "
-
+format = "<label>"
+format-padding = 2
 
 [module/usb]
 type = custom/script
@@ -351,5 +331,7 @@ click-left = udiskie-umount --detach -a
 
 label-foreground = ${colors.foreground}
 
+format = "<label>"
+format-padding = 4
 
 ; vim:ft=dosini

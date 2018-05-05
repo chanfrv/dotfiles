@@ -171,8 +171,14 @@ exec --no-startup-id "setxkbmap us"
 # custom script
 bindsym $mod+space exec --no-startup-id "~/.config/i3/switchkeyboard.sh"
 
-# No title bar
-new_window 1pixel
+# Window border
+default_border pixel 2
+default_floating_border pixel 2
+# Window color
+#client.focused #9fbc00 #9fbc00 #111111
+#client.unfocused #444444 #444444 #315858
+#client.focused_inactive #444444 #444444 #2c2c2f
+#client.urgent #383a3b #383a3b #ee0000
 
 # Redshift (~/.config/redshift.conf)
 # https://wiki.archlinux.org/index.php/Redshift
