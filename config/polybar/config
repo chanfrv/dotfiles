@@ -26,6 +26,7 @@ green = #38b21c
 red = #ff0000
 warning = #f5a70a
 yellow = #e3e300
+purple = #911961
 
 ;=====================================================
 ;
@@ -201,7 +202,7 @@ format-disconnected-background = ${colors.background}
 [module/date]
 type = internal/date
 
-date = "%a %d %b"
+date = %d/%m/%Y
 time = %H:%M
 date-alt = %a %b %d %Y
 time-alt = %H:%M:%S
@@ -233,7 +234,7 @@ animation-charging-1 = "  "
 animation-charging-2 = "  "
 animation-charging-3 = "  "
 animation-charging-4 = "  "
-animation-charging-framerate = 750
+animation-charging-framerate = 720
 
 label-charging = %percentage%%
 label-discharging = %percentage%%
@@ -251,10 +252,10 @@ format-discharging-foreground = ${colors.foreground}
 format-discharging-underline = ${colors.warning}
 format-discharging-padding = 1
 
-format-full = "  <label-full>"
+format-full = "    <label-full>"
 format-full-background = ${colors.background}
 format-full-foreground = ${colors.green}
-label-full-underline = ${colors.green}
+format-full-underline = ${colors.green}
 format-full-padding = 1
 
 
@@ -265,7 +266,7 @@ label = %percentage%%
 
 format = "<ramp> <label>"
 format-foreground = ${colors.foreground}
-format-underline = ${colors.foreground}
+format-underline = ${colors.purple}
 format-padding = 1
 
 ramp-0 = 🌕
