@@ -62,7 +62,7 @@ font-2 = Material Icons:size=14;4
 
 modules-left = i3 usb
 modules-center = 
-modules-right = xbacklight volume battery wlan eth date keyboard
+modules-right = xbacklight volume wlan eth battery date keyboard
 
 cursor-click = pointer
 cursor-scroll = pointer
@@ -282,18 +282,18 @@ label-muted = "   %percentage%%"
 
 format-muted = <label-muted>
 format-muted-foreground = ${colors.foreground}
-format-muted-underline = ${colors.red}
+format-muted-underline = ${colors.warning}
 format-muted-padding = 1
 
 label-volume = %percentage%%
 
 format-volume = "<ramp-volume> <label-volume>"
 format-volume-foreground = ${colors.foreground}
-format-volume-underline = ${colors.green}
+format-volume-underline = ${colors.focused}
 format-volume-padding = 1
 
-ramp-volume-0 = " "
-ramp-volume-1 = " "
+ramp-volume-0 = "  "
+ramp-volume-1 = "  "
 ramp-volume-2 = " "
 
 
