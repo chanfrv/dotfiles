@@ -222,17 +222,17 @@ battery = BAT0
 adapter = AC
 full-at = 98
 
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
-ramp-capacity-3 = " "
-ramp-capacity-4 = " "
+ramp-capacity-0 = "  "
+ramp-capacity-1 = "  "
+ramp-capacity-2 = "  "
+ramp-capacity-3 = "  "
+ramp-capacity-4 = "  "
 
-animation-charging-0 = " "
-animation-charging-1 = " "
-animation-charging-2 = " "
-animation-charging-3 = " "
-animation-charging-4 = " "
+animation-charging-0 = "  "
+animation-charging-1 = "  "
+animation-charging-2 = "  "
+animation-charging-3 = "  "
+animation-charging-4 = "  "
 animation-charging-framerate = 750
 
 label-charging = %percentage%%
@@ -278,9 +278,9 @@ ramp-4 = 🌑
 [module/volume]
 type = internal/volume
 
-label-muted = %percentage%%
+label-muted = "   %percentage%%"
 
-format-muted = "   <label-muted>"
+format-muted = <label-muted>
 format-muted-foreground = ${colors.foreground}
 format-muted-underline = ${colors.red}
 format-muted-padding = 1
@@ -292,9 +292,9 @@ format-volume-foreground = ${colors.foreground}
 format-volume-underline = ${colors.green}
 format-volume-padding = 1
 
-ramp-volume-0 = ""
-ramp-volume-1 = ""
-ramp-volume-2 = ""
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
 
 
 [module/keyboard]
