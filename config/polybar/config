@@ -25,7 +25,7 @@ foreground = #ddccbb
 green = #38b21c
 red = #ff0000
 warning = #f5a70a
-yellow = #e3e300
+yellow = #c1c100
 purple = #911961
 
 ;=====================================================
@@ -44,26 +44,26 @@ fixed-center = false
 
 overline-size = 1
 overline-color = #151515
-underline-size = 3
+underline-size = 4
 underline-color = #151515
-background = #1a1a1a
+background = ${colors.background}
 
 border-bottom-size = 0
 border-bottom-color = #333
 
 spacing = 1
 padding-left = 0
-padding-right = 0
+padding-right = 3
 module-margin-left = 4
 module-margin-right = 0
 
 font-0 = Noto Nerd Font:size=10;1
-font-1 = DejaVuSansMono Nerd Font:size=11;2
-font-2 = Material Icons:size=14;4
+font-1 = DejaVuSansMono Nerd Font:size=11;1
+font-2 = Material Icons:size=14;3
 
 modules-left = i3 usb
 modules-center = 
-modules-right = xbacklight volume wlan eth battery date keyboard
+modules-right = xbacklight volume wlan eth battery date keyboard menu
 
 cursor-click = pointer
 cursor-scroll = pointer
@@ -125,9 +125,10 @@ type = internal/cpu
 interval = 1.0
 
 format = <ramp-coreload><label>
+format-underline = ${colors.green}
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-padding = 0
+format-padding = 1
 
 label = %percentage:03%%
 
@@ -146,10 +147,11 @@ type = internal/memory
 interval = 1
 
 format-prefix = "  "
+format-underline = ${colors.green}
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
 format-margin-top = -5
-format-padding = 0
+format-padding = 1
 
 label = %percentage_used%%
 
@@ -159,9 +161,10 @@ type = internal/network
 interface = wlp6s0
 interval = 2
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
+ramp-signal-0 = --
+ramp-signal-1 = "  -"
+ramp-signal-2 = "  +"
+ramp-signal-3 = ++
 
 label-connected = %essid% (%local_ip%)
 
@@ -204,15 +207,15 @@ type = internal/date
 
 date = %d/%m/%Y
 time = %H:%M
-date-alt = %a %b %d %Y
-time-alt = %H:%M:%S
+date-alt = %A, %b %d %Y
+time-alt = %H:%M
 
 label = %date%, %time%
 
 format = "  <label>"
 format-background = ${colors.background}
 format-foreground = ${colors.foreground}
-format-underline = ${colors.focused}
+format-underline = ${colors.yellow}
 format-padding = 1
 
 interval = 60
@@ -303,35 +306,11 @@ type = internal/xkeyboard
 
 format = <label-layout>
 
-label-layout = %layout%
-label-layout-padding = 3
-label-layout-background = ${colors.focused}
+label-layout = %name%
+label-layout-background = ${colors.background}
 label-layout-foreground = ${colors.foreground}
-
-
-[module/pkg]
-type = custom/script
-interval = 60
-exec = ~/.config/polybar/pkg.sh
-
-label = "%output:0:30%"
-label-foreground = ${colors.foreground}
-
-format-prefix = "  "
-format-prefix-foreground = #5b5b5b
-format-padding = 1
-
-
-[module/bluetooth]
-type = custom/script
-interval = 10
-exec = ~/.config/polybar/bluetooth.sh
-
-label = "  %output%"
-label-foreground = ${colors.foreground}
-
-format = "<label>"
-format-padding = 1
+label-layout-underline = ${colors.focused}
+label-layout-padding = 1
 
 
 [module/usb]
@@ -348,5 +327,23 @@ label-foreground = ${colors.foreground}
 
 format = "<label>"
 format-padding = 1
+
+
+[module/menu]
+type = custom/menu
+
+expand-right = false
+
+label-open = " "
+label-close = 
+label-padding = 1
+
+label-separator = 
+
+menu-0-0 = " "
+menu-0-0-exec = restart
+menu-0-1 = 
+menu-0-1-exec = poweroff
+
 
 ; vim:ft=dosini
