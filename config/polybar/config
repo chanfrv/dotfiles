@@ -57,7 +57,7 @@ padding-right = 3
 module-margin-left = 4
 module-margin-right = 0
 
-font-0 = Noto Nerd Font:size=10;1
+font-0 = Noto Nerd Font:size=10;0
 font-1 = DejaVuSansMono Nerd Font:size=11;1
 font-2 = Material Icons:size=14;3
 
@@ -161,10 +161,14 @@ type = internal/network
 interface = wlp6s0
 interval = 2
 
-ramp-signal-0 = --
-ramp-signal-1 = "  -"
-ramp-signal-2 = "  +"
-ramp-signal-3 = ++
+ramp-signal-0 = ▁
+ramp-signal-1 = ▂
+ramp-signal-2 = ▃
+ramp-signal-3 = ▄
+ramp-signal-4 = ▅
+ramp-signal-5 = ▆
+ramp-signal-6 = ▇
+ramp-signal-7 = █
 
 label-connected = %essid% (%local_ip%)
 
@@ -336,14 +340,16 @@ expand-right = false
 
 label-open = " "
 label-close = 
-label-padding = 1
+label-padding = 2
 
 label-separator = 
 
-menu-0-0 = " "
-menu-0-0-exec = restart
-menu-0-1 = 
-menu-0-1-exec = poweroff
+menu-0-0 = "  "
+menu-0-0-exec = i3lock -ti ~/Pictures/wmap.png
+menu-0-1 = "  "
+menu-0-1-exec = reboot
+menu-0-2 = ""
+menu-0-2-exec = poweroff
 
 
 ; vim:ft=dosini
