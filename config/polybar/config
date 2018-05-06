@@ -53,12 +53,12 @@ border-bottom-color = #333
 
 spacing = 1
 padding-left = 0
-padding-right = 3
+padding-right = 2
 module-margin-left = 4
 module-margin-right = 0
 
-font-0 = Noto Nerd Font:size=10;0
-font-1 = DejaVuSansMono Nerd Font:size=11;1
+font-0 = Noto Nerd Font:size=10;1
+font-1 = DejaVuSansMono Nerd Font:size=11;2
 font-2 = Material Icons:size=14;3
 
 modules-left = i3 usb
@@ -243,8 +243,8 @@ animation-charging-3 = "  "
 animation-charging-4 = "  "
 animation-charging-framerate = 720
 
-label-charging = %percentage%%
-label-discharging = %percentage%%
+label-charging = %percentage:2%%
+label-discharging = %percentage:2%%
 label-full = full
 
 format-charging = "<animation-charging> <label-charging>"
@@ -269,7 +269,7 @@ format-full-padding = 1
 [module/xbacklight]
 type = internal/xbacklight
 
-label = %percentage%%
+label = %percentage:2%%
 
 format = "<ramp> <label>"
 format-foreground = ${colors.foreground}
@@ -286,23 +286,23 @@ ramp-4 = 🌑
 [module/volume]
 type = internal/volume
 
-label-muted = "   %percentage%%"
+label-muted = " %percentage:2%%"
 
 format-muted = <label-muted>
 format-muted-foreground = ${colors.foreground}
 format-muted-underline = ${colors.warning}
 format-muted-padding = 1
 
-label-volume = %percentage%%
+label-volume = %percentage:2%%
 
 format-volume = "<ramp-volume> <label-volume>"
 format-volume-foreground = ${colors.foreground}
 format-volume-underline = ${colors.focused}
 format-volume-padding = 1
 
-ramp-volume-0 = "  "
-ramp-volume-1 = "  "
-ramp-volume-2 = " "
+ramp-volume-0 = ""
+ramp-volume-1 = ""
+ramp-volume-2 = ""
 
 
 [module/keyboard]
@@ -338,18 +338,25 @@ type = custom/menu
 
 expand-right = false
 
-label-open = "   "
-label-close = "  "
-label-padding = 1
+label-open = " "
+label-open-padding = 1
+label-open-underline = ${colors.foreground}
+label-close = ""
+label-close-padding = 1
 
 label-separator = 
 
 menu-0-0 = "   "
 menu-0-0-exec = i3lock -ti ~/Pictures/wmap.png
-menu-0-1 = "  "
+menu-0-0-padding = 1
+menu-0-1 = ""
 menu-0-1-exec = reboot
+menu-0-1-padding = 1
 menu-0-2 = ""
 menu-0-2-exec = poweroff
+menu-0-2-padding = 1
+
+format-underline = ${colors.red}
 
 
 ; vim:ft=dosini
