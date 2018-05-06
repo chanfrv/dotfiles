@@ -338,13 +338,13 @@ type = custom/menu
 
 expand-right = false
 
-label-open = " "
-label-close = 
-label-padding = 2
+label-open = "   "
+label-close = "  "
+label-padding = 1
 
 label-separator = 
 
-menu-0-0 = "  "
+menu-0-0 = "   "
 menu-0-0-exec = i3lock -ti ~/Pictures/wmap.png
 menu-0-1 = "  "
 menu-0-1-exec = reboot

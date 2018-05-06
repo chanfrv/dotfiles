@@ -5,9 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#
-# aliases
-#
 
 alias update="yes | sudo pacman -Syu"
 
@@ -24,10 +21,6 @@ alias conn='nmcli dev wifi con'
 
 alias i3lock='i3lock -ti ~/Pictures/wmap.png'
 
-#
-# exports
-#
-
 # PS1
 ps1_b="\[\e[36m\]"
 ps1_g="\[\e[32m\]"
@@ -38,7 +31,7 @@ export PS1="[${ps1_b}\u${ps1_0}@${ps1_g}\h${ps1_0} \W]${ps1_r}\$?${ps1_0}$ "
 # editor
 export EDITOR=vim
 
-# java
+# jetbrains
 export JAVA_HOME=/usr/lib/jvm/default
 export PATH=$PATH:/opt/gradle/gradle-4.6/bin:$HOME/pycharm-2018.1.2/bin
 
