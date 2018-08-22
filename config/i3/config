@@ -172,8 +172,8 @@ exec --no-startup-id "setxkbmap us"
 bindsym $mod+space exec --no-startup-id "~/.config/i3/switchkeyboard.sh"
 
 # Window border
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 4
+default_floating_border pixel 4
 # Window color
 #client.focused #9fbc00 #9fbc00 #111111
 #client.unfocused #444444 #444444 #315858

@@ -33,11 +33,11 @@ export EDITOR=vim
 
 # jetbrains
 export JAVA_HOME=/usr/lib/jvm/default
-export PATH=$PATH:/opt/gradle/gradle-4.6/bin:$HOME/pycharm-2018.1.2/bin
+export PATH=$PATH:/opt/gradle/gradle-4.6/bin
 
 # postgreSQL
 export PGDATA="$HOME/postgres_data"
 
 alias psql-create="rm -rf $PGDATA/ && initdb --locale "$LANG" -E UTF8"
-alias psql-launch="postgres -D "$PGDATA" -k /tmp"
 alias psql-con="psql -h localhost postgres"
+alias psql-launch="postgres -D "$PGDATA" -k /tmp"
