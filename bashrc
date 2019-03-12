@@ -42,11 +42,11 @@ alias git-count='git shortlog -ens'
 alias i3lock='i3lock -ti ~/Pictures/wmap.png'
 
 # PS1
-ps1_b="\[\e[36m\]"
-ps1_g="\[\e[32m\]"
-ps1_r="\[\e[31m\]"
+ps1_b="\[\e[01;34m\]"
+ps1_g="\[\e[01;32m\]"
+ps1_r="\[\e[01;31m\]"
 ps1_0="\[\e[0m\]"
-export PS1="[${ps1_b}\u${ps1_0}@${ps1_g}\h${ps1_0} \W]${ps1_r}\$?${ps1_0}$ "
+export PS1="${ps1_g}\u@\h:${ps1_b}\W ${ps1_r}\$?${ps1_b}$ ${ps1_0}"
 
 # editor
 export EDITOR=vim
@@ -59,6 +59,10 @@ export PATH=$PATH:/opt/gradle/gradle-4.6/bin
 export PGDATA="$HOME/postgres_data"
 export PGDIR="/tmp"
 
-alias psql-create="rm -rf "$PGDATA/" && initdb --locale "$LANG" -E UTF8"
-alias psql-con="psql -h localhost postgres"
-alias psql-launch="postgres -D "$PGDATA" -k "$PGDIR""
+alias psql-init="rm -rf "$PGDATA/" && initdb --locale "$LANG" -E UTF8"
+alias psql-server="postgres -D "$PGDATA" -k "$PGDIR""
+alias psql-conn="psql -h localhost postgres"
+
+# Pi
+alias pi-local='ssh pi@192.168.1.16'
+alias pi-inet='ssh pi@victorchanfrault.com'
