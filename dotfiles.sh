@@ -1,14 +1,23 @@
 #!/bin/sh
 
+# Handles the dotfiles by either updating the user configuration
+# or by him updating the repository.
+# Note that, as a user, you may need the repository's rights to
+# update.
+#
+# Author: victor chanfrault <victor.chanfrault@outlook.fr>
+
 script="$0"
 tracked="bashrc $(echo config/i3/*) $(echo config/polybar/*) vimrc Xresources"
 
+# Shows a nice help
 help()
 {
   echo "Usage: $script [options] [command]"
   echo
   echo "Options:"
   echo "\t-h, --help      Show this help"
+  echo "\t-v, --version   Show the current version"
   echo
   echo "Commands:"
   echo "\tinstall         Install the configuration on your machine"
@@ -17,6 +26,7 @@ help()
   exit 0
 }
 
+# Shows last git tag
 version()
 {
   echo -n "$script version "
@@ -24,6 +34,7 @@ version()
   exit 0
 }
 
+# Used in install()
 copy_files()
 {
   read line
@@ -52,12 +63,14 @@ copy_files()
   exit 0
 }
 
+# Copy files from here to the ~/ directory
 install()
 {
   echo -n "You are about to overwrite your current configuration files, are you sure? (Y/n) "
   copy_files
 }
 
+# Copy files in the repository, then commit them.
 update()
 {
   diff=""
@@ -68,6 +81,7 @@ update()
       cp "~/.$arg" "$arg"
 
       git add "$arg"
+      diff="$diff $arg"
     fi
   done
 
@@ -81,14 +95,32 @@ update()
   exit 0
 }
 
-unrecognized()
+# "try ..." text
+try_help()
 {
-  echo "Unrecognized option $1, try: $script -h. Get some help goddammit"
+  echo "Try '$script --help'. Get some help goddammit"
   exit 1
 }
 
+# Missing operand
+missing()
+{
+  echo "Missing operand"
+  try_help
+}
+
+# Unrecognised option
+unrecognized()
+{
+  echo "Unrecognized option $1"
+  try_help
+}
+
+#
+# Program entry point
+#
 if [ "$#" -eq 0 ]; then
-  help
+  missing
 fi
 
 for arg in "$@"; do
