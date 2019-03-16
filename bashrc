@@ -7,8 +7,8 @@
 
 # Don't put duplicate lines or lines starting with space in the history.
 HISTCONTROL=ignoreboth
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # Append to the history file, don't overwrite it
 shopt -s histappend
@@ -22,6 +22,9 @@ shopt -s checkwinsize
 # ** match all files and zero or more dirs and subdirs
 shopt -s globstar
 
+# ----------------
+#     ALIASES
+# ----------------
 # color support
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
@@ -42,62 +45,11 @@ alias git-list='git ls-tree -r master --name-only'
 alias git-graph='git log --graph --oneline'
 alias git-count='git shortlog -ens'
 
-# PS1
-ps1_b="\[\e[01;34m\]"
-ps1_g="\[\e[01;32m\]"
-ps1_r="\[\e[01;31m\]"
-ps1_0="\[\e[0m\]"
-export PS1="${ps1_g}\u@\h:${ps1_b}\W ${ps1_r}\$?${ps1_b}$ ${ps1_0}"
-
-# get IP adresses
-my_ip () {
-        MY_IP=$(/sbin/ifconfig wlan0 | awk "/inet/ { print $2 } " | sed -e s/addr://)
-                #/sbin/ifconfig | awk /'inet addr/ {print $2}'
-        MY_ISP=$(/sbin/ifconfig wlan0 | awk "/P-t-P/ { print $3 } " | sed -e s/P-t-P://)
-}
-
-# get current host related info
-ii () {
-    echo -e "\nYou are logged on ${red}$HOST"
-    echo -e "\nAdditionnal information:$NC " ; uname -a
-    echo -e "\n${red}Users logged on:$NC " ; w -h
-    echo -e "\n${red}Current date :$NC " ; date
-    echo -e "\n${red}Machine stats :$NC " ; uptime
-    echo -e "\n${red}Memory stats :$NC " ; free
-    echo -en "\n${red}Local IP Address :$NC" ; /sbin/ifconfig wlan0 | awk /'inet addr/ {print $2}' | sed -e s/addr:/' '/ 
-    #my_ip 2>&. ;
-    #my_ip 2>&1 ;
-    #echo -e "\n${RED}Local IP Address :$NC" ; echo ${MY_IP:."Not connected"}
-    #echo -e "\n${RED}ISP Address :$NC" ; echo ${MY_ISP:."Not connected"}
-    #echo -e "\n${RED}Local IP Address :$NC" ; echo ${MY_IP} #:."Not connected"}
-    #echo -e "\n${RED}ISP Address :$NC" ; echo ${MY_ISP} #:."Not connected"}
-    echo
-}
-
-# Easy extract
-extract () {
-  if [ -f $1 ] ; then
-      case $1 in
-          *.tar.bz2)   tar xvjf $1    ;;
-          *.tar.gz)    tar xvzf $1    ;;
-          *.bz2)       bunzip2 $1     ;;
-          *.rar)       rar x $1       ;;
-          *.gz)        gunzip $1      ;;
-          *.tar)       tar xvf $1     ;;
-          *.tbz2)      tar xvjf $1    ;;
-          *.tgz)       tar xvzf $1    ;;
-          *.zip)       unzip $1       ;;
-          *.Z)         uncompress $1  ;;
-          *.7z)        7z x $1        ;;
-          *)           echo "don't know how to extract '$1'..." ;;
-      esac
-  else
-      echo "'$1' is not a valid file!"
-  fi
-}
-
 # editor
 export EDITOR=vim
+
+# visudo(8)
+export VISUAL=vim
 
 # jetbrains
 export JAVA_HOME=/usr/lib/jvm/default
@@ -105,12 +57,104 @@ export PATH=$PATH:/opt/gradle/gradle-4.6/bin
 
 # postgreSQL
 export PGDATA="$HOME/postgres_data"
-export PGDIR="/tmp"
+export PGDIR='/tmp'
 
-alias psql-init="if [ -d $PGDATA ]; then rm -rf $PGDATA; fi && initdb --locale $LANG -E UTF8"
+alias psql-clean="[[ -d $PGDATA ]] && rm -rf $PGDATA"
+alias psql-init="psql-clean && initdb --locale $LANG -E UTF8"
 alias psql-server="postgres -D $PGDATA -k $PGDIR"
 alias psql-conn="psql -h localhost postgres"
 
 # Pi
-#alias pi-local='ssh pi@192.168.1.16'
+alias pi-local='ssh pi@192.168.1.16'
 alias pi-inet='ssh pi@victorchanfrault.com'
+
+# ----------------
+#       PS1
+# ----------------
+blue="\[\e[01;34m\]"
+green="\[\e[01;32m\]"
+red="\[\e[01;31m\]"
+blank="\[\e[0m\]"
+
+if [ "$EUID" -eq 0 ]; then
+  # Running as root
+  export PS1="${red}\u${green}@\h:${blue}\W ${red}\$?${blue}$ ${blank}"
+else
+  # Running as a user
+  export PS1="${green}\u@\h:${blue}\W ${red}\$?${blue}$ ${blank}"
+fi
+
+# ----------------
+#    FUNCTIONS
+# ----------------
+# Easy extract
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xvjf $1    ;;
+      *.tar.gz)    tar xvzf $1    ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       rar x $1       ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xvf $1     ;;
+      *.tbz2)      tar xvjf $1    ;;
+      *.tgz)       tar xvzf $1    ;;
+      *.zip)       unzip $1       ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *)           echo "cannot extract '$1'..." ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
+}
+
+# Git statistics
+git_stats()
+{
+  if [[ ! -z $(git rev-parse --is-inside-work-tree 2> /dev/null) ]]; then
+    git log --numstat | awk '
+    function printStats(author) {
+      printf "\033[4m%s:\n\033[0m", author
+
+      printf "  [+] insertions: %d  (%.0f%%)\n",
+      more[author], (more[author] / more["total"] * 100)
+
+      printf "  [-] deletions: %d  (%.0f%%)\n",
+      less[author], (less[author] / less["total"] * 100)
+
+      printf "  files: %d  (%.0f%%)\n",
+      file[author], (file[author] / file["total"] * 100)
+
+      printf "  commits: %d  (%.0f%%)\n",
+      commits[author], (commits[author] / commits["total"] * 100)
+    }
+
+    /^Author:/ {
+    author           = $2 " " $3
+    commits[author]  += 1
+    commits["total"] += 1
+    }
+
+    /^[0-9]/ {
+    more[author] += $1
+    less[author] += $2
+    file[author] += 1
+
+    more["total"] += $1
+    less["total"] += $2
+    file["total"] += 1
+    }
+
+    END {
+      for (author in commits) {
+        if (author != "total") {
+          printStats(author)
+        }
+      }
+      printStats("total")
+    }'
+  else
+    echo 'git stats: not in a git repository.'
+  fi
+}
