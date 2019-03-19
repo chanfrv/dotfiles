@@ -11,7 +11,15 @@
 
 script="$0"
 tracked="bashrc config vimrc Xresources"
-tracked_tmpfile=$(mktemp)
+template="dotfiles"
+tracked_tmp_file=$(find /tmp -name "$template.*" 2> /dev/null | head -n 1)
+
+if [ ! -f "$tracked_tmp_file" ]; then
+  tracked_tmp_file=$(mktemp "/tmp/$template.XXXXXX")
+fi
+
+echo "$tracked_tmp_file"
+
 
 #
 # Helpers
@@ -19,12 +27,12 @@ tracked_tmpfile=$(mktemp)
 
 tracked_files()
 {
-  cat "$tracked_tmpfile"
+  cat "$tracked_tmp_file"
 }
 
 clear_tracked_file()
 {
-  if [ -f "$tracked_tmpfile" ]; then rm "$tracked_tmpfile"; fi
+  if [ -f "$tracked_tmp_file" ]; then rm "$tracked_tmp_file"; fi
 }
 
 #
@@ -48,10 +56,10 @@ help()
 
   printf "%s\n"     "You may notice that you are able to launch bash commands!"
   printf "%s\n"     "Don't get cocky each command run in a different subshell,"
-  printf "%s\n"     "but I am woring on making this even more overkill!"
+  printf "%s\n\n"   "but don't you worry I am working on it."
   printf "%s\n"     "If you have information on how to run an interactive"
   printf "%s\n"     "subshell, while keeping the environment all along,"
-  printf "%s\n"     "please contact victor.chanfrault@outlook.fr."
+  printf "%s\n\n"   "please contact victor.chanfrault@outlook.fr."
 }
 
 full_help()
@@ -80,7 +88,6 @@ unrecognized()
 {
   printf "%s\n" "$script: Unrecognized option $1"
   _try_help
-  clear_tracked_file
   exit 1
 }
 
@@ -99,13 +106,13 @@ tracked_list()
 tracked_add()
 {
   args="$@"
-  printf " %s" "$args" >> "$tracked_tmpfile"
+  printf " %s" "$args" >> "$tracked_tmp_file"
 }
 
 tracked_create()
 {
   args="$@"
-  printf "%s" "$args" > "$tracked_tmpfile"
+  printf "%s" "$args" > "$tracked_tmp_file"
 }
 
 tracked_remove()
@@ -181,7 +188,6 @@ _poll()
       ;;
     "n"|"N"|"no"|"No"|"nonononono")
       printf "%s\n" "Exiting ..."
-      clear_tracked_file
       exit 0
       ;;
     *)
@@ -225,7 +231,7 @@ commands()
       "i"|"install")    install                       ;;
       "u"|"update")     update                        ;;
       "t"|"tracked")    shift && tracked $@           ;;
-      "e"|"exit")       clear_tracked_file && exit 0  ;;
+      "e"|"exit")       exit 0                        ;;
       "")               return 0                      ;;
       *)                bash -c "$@"                  ;;
 #      *)                unrecognized_command "$1"     ;;
@@ -237,11 +243,6 @@ commands()
 # Program entry point
 #
 
-printf "%s\n\t%s\n\t%s\n\t%s\n"                        \
-  "$0 (2019)"                                          \
-  "Welcome to the most unnecessary script ever."       \
-  "Please do not underestimate boredom."               \
-  "Feel free to use the command 'help' to get started."
 tracked_create "$tracked"
 
 if [ "$#" -gt 0 ]; then
@@ -252,8 +253,14 @@ if [ "$#" -gt 0 ]; then
     *)                unrecognized "$1"               ;;
   esac
 else
+  printf "%s\n\t%s\n\t%s\n\t%s\n\n"                      \
+    "$0 (2019)"                                          \
+    "Welcome to the most unnecessary script ever."       \
+    "Please do not underestimate boredom."               \
+    "Feel free to use the command 'help' to get started."
+
   while true; do
-    printf "\n%s" "(dotfiles) $?$ " # TODO: printf "%s" "(dotfiles) $PS1"
+    printf "%s" "(dotfiles) $?$ " # TODO: printf "%s" "(dotfiles) $PS1"
     read line
     commands $line
   done
