@@ -110,7 +110,7 @@ extract () {
 }
 
 # Git statistics
-git_stats()
+git-stats()
 {
   if [[ ! -z $(git rev-parse --is-inside-work-tree 2> /dev/null) ]]; then
     git log --numstat | awk '
