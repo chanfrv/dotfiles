@@ -64,10 +64,6 @@ alias psql-init="psql-clean && initdb --locale $LANG -E UTF8"
 alias psql-server="postgres -D $PGDATA -k $PGDIR"
 alias psql-conn="psql -h localhost postgres"
 
-# Pi
-alias pi-local='ssh pi@192.168.1.16'
-alias pi-inet='ssh pi@victorchanfrault.com'
-
 # ----------------
 #       PS1
 # ----------------
