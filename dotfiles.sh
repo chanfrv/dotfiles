@@ -10,16 +10,59 @@
 #
 
 script="$0"
-tracked="bashrc config vimrc Xresources"
-template="dotfiles"
-tracked_tmp_file=$(find /tmp -name "$template.*" 2> /dev/null | head -n 1)
+tracked="bashrc config vimrc Xresources config/i3 config/polybar"
 
+# Restore tracked tmp file from /tmp, or create it
+tracked_tmp_file=$(find /tmp -name "dotfiles.*" 2> /dev/null | head -n 1)
 if [ ! -f "$tracked_tmp_file" ]; then
-  tracked_tmp_file=$(mktemp "/tmp/$template.XXXXXX")
+  tracked_tmp_file=$(mktemp "/tmp/dotfiles.XXXXXX")
 fi
 
-echo "$tracked_tmp_file"
+# Options for pretty print
+declare -A Options
+Options+=(["-h, --help"]="Show this help")
+Options+=(["-v, --version"]="Show the current version")
 
+declare -A Commands
+Commands+=(["h, help"]="Show the command list")
+Commands+=(["i, install"]="Install the configuration on your machine")
+Commands+=(["u, update"]="Update the repository dotfiles")
+Commands+=(["t, tracked tcommand"]="More commands on the tracked files")
+Commands+=(["e, exit"]="Exit the interactive shell")
+
+declare -A TCommands
+TCommands+=(["list"]="List tracked files")
+TCommands+=(["add files.."]="Add files to the tracked files")
+TCommands+=(["create files.."]="Clean the tracked files and add the files")
+TCommands+=(["remove files.."]="Remove files from the tracked list")
+
+# History
+HISTCONTROL=ignoreboth
+HISTFILE="$PWD/.dotfiles_history"
+HISTTIMEFORMAT='%F %T '
+
+#
+# Functions
+#
+
+print()
+{
+  [[ -n "$1" ]] || return 1
+  declare -n array="$1"
+
+  max=0
+  for comm in "${!array[@]}"; do
+    [[ "$max" -lt "${#comm}" ]] && max=${#comm}
+  done
+
+  printf "%s:\n" "${!array}"
+
+  for comm in "${!array[@]}"; do
+    printf "\t%-${max}s  %s\n" "$comm" "${array[$comm]}"
+  done
+
+  printf "\n"
+}
 
 #
 # Helpers
@@ -32,7 +75,7 @@ tracked_files()
 
 clear_tracked_file()
 {
-  if [ -f "$tracked_tmp_file" ]; then rm "$tracked_tmp_file"; fi
+  [[ -f "$tracked_tmp_file" ]] && rm "$tracked_tmp_file"
 }
 
 #
@@ -41,34 +84,24 @@ clear_tracked_file()
 
 help()
 {
-  printf "%s\n"     "Commands:"
-  printf "\t%s\n"   "help               Show the command list"
-  printf "\t%s\n"   "install            Install the configuration on your machine"
-  printf "\t%s\n"   "update             Update the repository dotfiles"
-  printf "\t%s\n"   "tracked tcommands  More commands on the tracked files. See TCommands below"
-  printf "\t%s\n\n" "exit               Exit the interactive shell"
+  print Commands
+  print TCommands
 
-  printf "%s\n"     "TCommands:"
-  printf "\t%s\n"   "list               List tracked files"
-  printf "\t%s\n"   "add files..        Add files to the tracked files"
-  printf "\t%s\n"   "create files..     Clean the tracked files and add the files"
-  printf "\t%s\n\n" "remove files..     Remove files from the tracked list"
-
-  printf "%s\n"     "You may notice that you are able to launch bash commands!"
-  printf "%s\n"     "Don't get cocky each command run in a different subshell,"
-  printf "%s\n\n"   "but don't you worry I am working on it."
-  printf "%s\n"     "If you have information on how to run an interactive"
-  printf "%s\n"     "subshell, while keeping the environment all along,"
-  printf "%s\n\n"   "please contact victor.chanfrault@outlook.fr."
+  printf "%s\n"   "You may notice that you are able to launch bash commands!"
+  printf "%s\n"   "Don't get cocky each command run in a different subshell,"
+  printf "%s\n\n" "but don't you worry I am working on it."
+  printf "%s\n"   "If you have information on how to run an interactive"
+  printf "%s\n"   "subshell, while keeping the environment all along,"
+  printf "%s\n\n" "please contact victor.chanfrault@outlook.fr."
 }
 
 full_help()
 {
-  printf "%s\n\n"   "Usage: $script [options]"
+  printf "%s\n%s\n\n" \
+         "Usage: $script [options]" \
+         "Launches an interactive shell to manage dotfiles."
 
-  printf "%s\n"     "Options:"
-  printf "\t%s\n"   "-h, --help      Show this help"
-  printf "\t%s\n\n" "-v, --version   Show the current version"
+  print Options
 
   help
 }
@@ -79,7 +112,7 @@ version()
   git describe --tags
 }
 
-_try_help()
+try_help()
 {
   printf "%s\n" "Try '$script --help' for more information"
 }
@@ -87,7 +120,7 @@ _try_help()
 unrecognized()
 {
   printf "%s\n" "$script: Unrecognized option $1"
-  _try_help
+  try_help
   exit 1
 }
 
@@ -105,8 +138,7 @@ tracked_list()
 
 tracked_add()
 {
-  args="$@"
-  printf " %s" "$args" >> "$tracked_tmp_file"
+  printf " %s" "$1" >> "$tracked_tmp_file"
 }
 
 tracked_create()
@@ -124,15 +156,15 @@ tracked_remove()
   tracked_create "$tracked"
 }
 
-_tracked_try_help()
+tracked_try_help()
 {
   printf "%s\n" "Try 'help' for more information"
 }
 
 tracked_missing()
 {
-  printf "%s\n" "$script tracked: Missing operand"
-  _tracked_try_help
+  printf "%s\n" "$script tracked: Missing argument"
+  tracked_try_help
 }
 
 tracked_unrecognized()
@@ -146,7 +178,7 @@ tracked()
   case "$1" in
     "list")   tracked_list                  ;;
     "add")    shift && tracked_add "$@"     ;;
-    "create") shift && tracked_create "$@"  ;; # TODO: fix
+    "create") shift && tracked_create "$@"  ;;
     "remove") shift && tracked_remove "$@"  ;;
     "")       tracked_missing               ;;
     *)        tracked_unrecognized "$1"     ;;
@@ -157,10 +189,10 @@ tracked()
 # Commands
 #
 
-_copy_file()
+copy_file()
 {
-  if [ $(diff "$1" "$2" > /dev/null) ]; then
-    printf "%s\n" "Copying $1 to $2 ..."
+  if [ -f "$1" ] && [ -f "$2" ] && [ $(diff "$1" "$2" > /dev/null) ]; then
+    printf "%s\n" "Copying '$1' to '$2' ..."
 
     if [ -d "$1" ]; then
       cp -r "$1" "$2"
@@ -171,37 +203,40 @@ _copy_file()
     fi
     return 0
   else
-    printf "%s\n" "$1 and $2 does not differ, skipping ..."
+    printf "%s\n" "'$1' and '$2' are identical"
     return 1
   fi
 }
 
-_poll()
+poll()
 {
-  read line
+  for file in $(tracked_files); do
+    home_file="$HOME/.$file"
+    if [ -f "$home_file" ] && [ -z $(diff "$home_file" "$file") ]; then
+      printf "%s %s" "Local file $home_file differs from the version from the" \
+        "repository. Update? (y/n) "
 
-  case "$line" in
-    "y"|"Y"|"yes"|"Yes")
-      for file in $(tracked_files); do
-        _copy_file "$file" "$HOME/.$file"
-      done
-      ;;
-    "n"|"N"|"no"|"No"|"nonononono")
-      printf "%s\n" "Exiting ..."
-      exit 0
-      ;;
-    *)
-      printf "%s" "Yes or no? "
-      _poll
-      ;;
-  esac
+      read -e line
+
+      case "$line" in
+        "y"|"Y"|"yes"|"Yes")
+          copy_file "$file" "$home_file"
+          ;;
+        "n"|"N"|"no"|"No"|"nonononono")
+          continue
+          ;;
+        *)
+          printf "%s" "Yes or no? "
+          poll
+          ;;
+      esac
+    fi
+  done
 }
 
 install()
 {
-  printf "%s\n%s" "You are about to overwrite your current configuration files," \
-                  "are you sure? (Y/n) "
-  _poll
+  poll
 }
 
 update()
@@ -209,32 +244,28 @@ update()
   diff=""
 
   for file in $(tracked_files); do
-    if [ $(_copy_file "$HOME/.$file" "$file") ]; then
-      git add "$file"
-      diff="$diff $file"
-    fi
+    [[ -f "$HOME/.$file" ]] && copy_file "$HOME/.$file" "$file"
   done
+}
 
-  printf "%s\n" "Files changed:"
-  for arg in $diff; do
-    printf "\t%s\n" "$arg"
-  done
-  printf "%s\n" "Commiting ..."
-  git commit -m "$USER: updated files $diff"
+quit()
+{
+  printf "%s\n" "Is it 'quit' or 'exit'? Or is it 'bye'... Annoying, eh?"
 }
 
 commands()
 {
   if [ "$#" -gt 0 ]; then
     case "$1" in
-      "h"|"help")       help                          ;;
-      "i"|"install")    install                       ;;
-      "u"|"update")     update                        ;;
-      "t"|"tracked")    shift && tracked $@           ;;
-      "e"|"exit")       exit 0                        ;;
-      "")               return 0                      ;;
-      *)                bash -c "$@"                  ;;
-#      *)                unrecognized_command "$1"     ;;
+      "h"|"help")    help                       ;;
+      "i"|"install") install                    ;;
+      "u"|"update")  update                     ;;
+      "t"|"tracked") shift && tracked $@        ;;
+      "e"|"exit")    exit 0                     ;;
+      "q"|"quit")    quit                       ;;
+      "")            return 0                   ;;
+      *)             bash -c "$@"               ;;
+#      *)             unrecognized_command "$1"  ;;
     esac
   fi
 }
@@ -243,7 +274,9 @@ commands()
 # Program entry point
 #
 
-tracked_create "$tracked"
+for file in $tracked; do
+  tracked_add "$file"
+done
 
 if [ "$#" -gt 0 ]; then
   case "$1" in
@@ -259,9 +292,18 @@ else
     "Please do not underestimate boredom."               \
     "Feel free to use the command 'help' to get started."
 
+  set -o history
+
   while true; do
-    printf "%s" "(dotfiles) $?$ " # TODO: printf "%s" "(dotfiles) $PS1"
-    read line
+    read -p "dotfiles> " -e line
+
+    case $line in
+      "^[[A")        history-search-backward  ;;
+      "^[[B")        history-search-forward   ;;
+    esac
+
+    history -s "$line"
+
     commands $line
   done
 fi

@@ -39,6 +39,10 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
+alias lla='ls -lA'
+
+# cd
+alias cd..='cd ..'
 
 # Git
 alias git-list='git ls-tree -r master --name-only'
@@ -79,6 +83,8 @@ else
   # Running as a user
   export PS1="${green}\u@\h:${blue}\W ${red}\$?${blue}$ ${blank}"
 fi
+
+[[ -z "$SSH_CONNECTION" ]] || export PS1="\[\e[01m\](ssh) \[\e[0m\]$PS1"
 
 # ----------------
 #    FUNCTIONS
