@@ -4,20 +4,20 @@
 ```
 .
 ./bashrc
+./dotfiles.sh
 ./Xresources
 ./vimrc
 ./config/i3/
 ./config/polybar/
 ```
-## Prerequisites
+
+## Packages
 
 [Polybar](https://github.com/jaagr/polybar) -- Status bar which replace i3bar
 
 [Udiskie](https://github.com/coldfix/udiskie) -- Removable devices management
 
 [Vundle](https://github.com/VundleVim/Vundle.vim) -- Vim plugins management
-
-[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) -- Add most of the symbols for the fonts
 
 i3 -- Window manager
 
@@ -33,6 +33,9 @@ xautolock -- Automatic lock
 
 [Mons](https://github.com/Ventto/mons) -- Multi-monitors, projector manager
 
-## Font
+## Fonts
 
 [Cascadia Code](https://github.com/microsoft/cascadia-code) -- Ms open source font
+
+[Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) -- Add most of the symbols for the fonts
+
