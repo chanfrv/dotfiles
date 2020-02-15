@@ -6,7 +6,6 @@
 ./bashrc
 ./Xresources
 ./vimrc
-./git-stats
 ./config/i3/
 ./config/polybar/
 ```
@@ -34,4 +33,6 @@ xautolock -- Automatic lock
 
 [Mons](https://github.com/Ventto/mons) -- Multi-monitors, projector manager
 
-awk -- Pattern scanning and processing language
+## Font
+
+[Cascadia Code](https://github.com/microsoft/cascadia-code) -- Ms open source font
