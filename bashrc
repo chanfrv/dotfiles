@@ -22,9 +22,6 @@ shopt -s checkwinsize
 # ** match all files and zero or more dirs and subdirs
 shopt -s globstar
 
-# --------------------------------
-# ALIASES
-# --------------------------------
 # color support
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
@@ -44,31 +41,35 @@ alias lla='ls -lA'
 # cd
 alias cd..='cd ..'
 
+# editor
+export EDITOR=vim
+export VISUAL=vim
+
+# clipboard
+alias cpy="wl-copy"
+alias pst="wl-paste"
+alias clr="wl-copy -c"
+
 # Git
 alias git-list='git ls-tree -r master --name-only'
 alias git-graph='git log --graph --oneline'
 alias git-count='git shortlog -ens'
 
-# editor
-export EDITOR=vim
+# transmission
+alias tms="transmission-remote"
 
-# visudo(8)
-export VISUAL=vim
-
-# --------------------------------
 # PS1
-# --------------------------------
 blue="\[\e[01;34m\]"
 green="\[\e[01;32m\]"
 red="\[\e[01;31m\]"
 blank="\[\e[0m\]"
 
 if [ "$EUID" -eq 0 ]; then
-  # Running as root
-  export PS1="${red}\u:${blue}\W ${red}\$?${blue}$ ${blank}"
+	# Running as root
+	export PS1="${red}\u:${blue}\W ${red}\$?${blue}$ ${blank}"
 else
-  # Running as a user
-  export PS1="${green}\u:${blue}\W ${red}\$?${blue}$ ${blank}"
+	# Running as a user
+	export PS1="${green}\u:${blue}\W ${red}\$?${blue}$ ${blank}"
 fi
 
 [[ -z "$SSH_CONNECTION" ]] || export PS1="\[\e[01m\](ssh) \[\e[0m\]$PS1"

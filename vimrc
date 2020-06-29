@@ -11,7 +11,7 @@ set mouse=a
 " Indentation
 set autoindent
 set smartindent
-set expandtab
+"set expandtab
 set softtabstop=2 shiftwidth=2 tabstop=2
 
 " Replacement
@@ -147,8 +147,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'morhetz/gruvbox'
-"Plugin 'vim-airline/vim-airline'
-"Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
@@ -162,7 +160,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_remove_include_errors = 1
 let g:syntastic_c_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c99'
-let g:syntastic_cpp_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c++17'
+let g:syntastic_cpp_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c++20'
 
 
 highlight link SyntasticErrorLine error
