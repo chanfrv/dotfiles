@@ -32,44 +32,66 @@ alias egrep='egrep --color=auto'
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# more on ls
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 alias lla='ls -lA'
-
-# cd
 alias cd..='cd ..'
+alias echo='echo -e'
+alias mkdir='mkdir -p'
 
 # editor
 export EDITOR=vim
 export VISUAL=vim
 
+alias vimrc="$EDITOR ~/.vimrc"
+alias bashrc="$EDITOR ~/.bashrc"
+
 # clipboard
-alias cpy="wl-copy"
-alias pst="wl-paste"
-alias clr="wl-copy -c"
+clipboard()
+{
+    case "$1" in
+        'c'|'copy')		wl-copy ;;
+        'p'|'paste')	wl-paste ;;
+        'clear')	    wl-copy -c ;;
+        *)				echo "cliboard copy|paste|clear" ;;
+    esac
+}
+alias cb='clipboard'
 
 # Git
 alias git-list='git ls-tree -r master --name-only'
 alias git-graph='git log --graph --oneline'
 alias git-count='git shortlog -ens'
 
-# transmission
-alias tms="transmission-remote"
+gitc()
+{
+    if [ -z "$1" ]; then
+        printf "Usage: %s user/repo\n" "${FUNCNAME[0]}"
+    else
+        git clone "git@github.com:/$1"
+    fi
+}
+
+
+
+# pdf
+pdf() { evince "$@" & }
+
+#image
+image() { eog "$@" & }
 
 # PS1
-blue="\[\e[01;34m\]"
-green="\[\e[01;32m\]"
-red="\[\e[01;31m\]"
-blank="\[\e[0m\]"
+__ps1_user="\[\e[96m\]\u\[\e[0m\]"
+__ps1_root="\[\e[91m\]\u\[\e[0m\]"
+__ps1_host="\[\e[92m\]\h\[\e[0m\]"
+__ps1_pwd="\W"
+#__ps1_err="\[\e[91m\]\$?\[\e[0m\]"
 
 if [ "$EUID" -eq 0 ]; then
-	# Running as root
-	export PS1="${red}\u:${blue}\W ${red}\$?${blue}$ ${blank}"
+    export PS1="${__ps1_root}@${__ps1_host} ${__ps1_pwd}> "
 else
-	# Running as a user
-	export PS1="${green}\u:${blue}\W ${red}\$?${blue}$ ${blank}"
+    export PS1="${__ps1_user}@${__ps1_host} ${__ps1_pwd}> "
 fi
 
-[[ -z "$SSH_CONNECTION" ]] || export PS1="\[\e[01m\](ssh) \[\e[0m\]$PS1"
+[[ -z "SSH_CONNECTION" ]] && export PS1="(ssh) $PS1"

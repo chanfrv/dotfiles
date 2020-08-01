@@ -1,142 +1,41 @@
 " Misc
 set nocompatible
 syntax on
+filetype off
+
 set encoding=utf-8
 set backspace=indent,eol,start
-filetype off
 set background=dark
 set history=5000
-set mouse=a
+set mouse=a         "mouse
+set number          "line numbers
+set laststatus=2    "statusline
+set autoread
+set ruler
+set ignorecase "case insensitive search/cmds
+set smartcase  "sometimes case sensitive
 
-" Indentation
 set autoindent
 set smartindent
-"set expandtab
-set softtabstop=2 shiftwidth=2 tabstop=2
+set expandtab
+set softtabstop=4 shiftwidth=4 tabstop=4
 
-" Replacement
-set listchars=trail:~,tab:>-
-set list
+set listchars=tab:▹\ ,trail:·,precedes:←,extends:→
+set nolist
+nnoremap <leader>c :set nolist!<CR>
 
-" Columns
-"match ErrorMsg '\%>80v.\+'     "highlight characters beyond 80 col
-set ruler
+" C
+autocmd Filetype c    nnoremap <buffer> <F5>  :!make<CR>
+autocmd Filetype c    nnoremap <C-Y>          :YcmGenerateConfig<CR>
+" C++
+autocmd Filetype cpp  nnoremap <buffer> <F5>  :!make<CR>
+autocmd Filetype cpp  nnoremap <C-Y>          :YcmGenerateConfig<CR>
+" RUST
+autocmd Filetype rust nnoremap <buffer> <F5>  :!cargo build<CR>
+autocmd Filetype rust nnoremap <buffer> <F6>  :!cargo run<CR>
+autocmd Filetype rust nnoremap <buffer> <F7>  :!cargo test<CR>
+autocmd Filetype rust nnoremap <buffer> <F8>  :!cargo bench<CR>
 
-"statusline setup
-"-------------------------------------------------------------------------------
-set statusline =\        "a first whitespace
-
-set statusline+=%f\    "filename
-set statusline+=%*
-
-"display a warning if fileformat isnt unix
-set statusline+=%#warningmsg#
-set statusline+=%{&ff!='unix'?'['.&ff.']':''}
-set statusline+=%*
-
-"display a warning if file encoding isnt utf-8
-set statusline+=%#warningmsg#
-set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
-set statusline+=%*
-
-"read only flag
-set statusline+=%r
-set statusline+=%*
-
-"modified flag
-set statusline+=%#warningmsg#
-set statusline+=%m
-set statusline+=%*
-
-set statusline+=%{fugitive#statusline()} "
-
-set statusline+=%h      "help file flag
-set statusline+=%y      "filetype
-
-"display a warning if &et is wrong, or we have mixed-indenting
-set statusline+=%#error#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%*
-
-set statusline+=%#warningmsg#
-set statusline+=%{StatuslineTrailingSpaceWarning()}
-set statusline+=%*
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-set statusline+=%=       "left/right separator
-set statusline+=%c,      "cursor column
-set statusline+=%l       "cursor line
-"set statusline+=%L      "total lines
-set statusline+=%4P\     "percent through file
-
-set laststatus=2
-
-let syntastic_stl_format = '[Syntax: %E{line:%fe }%W{#W:%w}%B{ }%E{#E:%e}]'
-
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
-
-"return '[\s]' if trailing white space is detected
-"return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-  if !exists("b:statusline_trailing_space_warning")
-
-    if !&modifiable
-      let b:statusline_trailing_space_warning = ''
-      return b:statusline_trailing_space_warning
-    endif
-
-    if search('\s\+$', 'nw') != 0
-      let b:statusline_trailing_space_warning = '[~]'
-    else
-      let b:statusline_trailing_space_warning = ''
-    endif
-  endif
-  return b:statusline_trailing_space_warning
-endfunction
-
-"return the syntax highlight group under the cursor ''
-function! StatuslineCurrentHighlight()
-  let name = synIDattr(synID(line('.'),col('.'),1),'name')
-  if name == ''
-    return ''
-  else
-    return '[' . name . ']'
-  endif
-endfunction
-
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
-"return '[&et]' if &et is set wrong
-"return '[mixed-indenting]' if spaces and tabs are used to indent
-"return an empty string if everything is fine
-function! StatuslineTabWarning()
-  if !exists("b:statusline_tab_warning")
-    let b:statusline_tab_warning = ''
-
-    if !&modifiable
-      return b:statusline_tab_warning
-    endif
-
-    let tabs = search('^\t', 'nw') != 0
-
-    "find spaces that arent used as alignment in the first indent column
-    let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
-
-    if tabs && spaces
-      let b:statusline_tab_warning =  '[mixed-indenting]'
-    elseif (spaces && !&et) || (tabs && &et)
-      let b:statusline_tab_warning = '[&et]'
-    endif
-  endif
-  return b:statusline_tab_warning
-endfunction
-
-"recalculate the long line warning when idle and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 
 " Plugins Vundle
 " ------------------------------------------------------------------------------
@@ -145,31 +44,45 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'morhetz/gruvbox'
-Plugin 'tpope/vim-fugitive'
+Plugin 'rust-lang/rust.vim'             "rust
+Plugin 'itchyny/lightline.vim'          "statusline
+Plugin 'tpope/vim-fugitive'             "git integration
+Plugin 'Yggdroot/indentLine'            "indentation guide
+Plugin 'ycm-core/YouCompleteMe'         "autocompletion
+Plugin 'rdnetto/YCM-Generator'          "autocompletion db generator
+
+"Plugin 'sheerun/vim-wombat-scheme'
+"Plugin 'morhetz/gruvbox'
+Plugin 'joshdick/onedark.vim'
 
 call vundle#end()
 filetype plugin indent on
 
-" Syntastic
-let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_remove_include_errors = 1
-let g:syntastic_c_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c99'
-let g:syntastic_cpp_compiler_options = '-Wall -Werror -Wextra -pedantic -std=c++20'
+" YCM
+let g:ycm_confirm_extra_conf = 0
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 
+" Indentline
+let g:indentLine_char = '▏'
 
-highlight link SyntasticErrorLine error
-highlight link SyntasticWarningLine todo
+" Colorscheme
+"colorscheme wombat
+"colorscheme gruvbox
+colorscheme onedark
 
-" Gruvbox
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
+" Lightline
+set noshowmode
+let g:lightline = {
+            \ 'colorscheme': 'onedark',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+            \   'right': [ [ 'lineinfo' ],
+            \              [ 'percent' ],
+            \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'FugitiveHead'
+            \ },
+            \ }
 
-" Airline
-"set noshowmode
-"let g:airline_powerline_fonts = 1
