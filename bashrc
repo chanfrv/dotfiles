@@ -69,7 +69,7 @@ gitc()
     if [ -z "$1" ]; then
         printf "Usage: %s user/repo\n" "${FUNCNAME[0]}"
     else
-        git clone "git@github.com:/$1"
+        git clone "git@github.com:/$1 --recurse-submodules -j$(nproc)"
     fi
 }
 

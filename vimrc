@@ -35,7 +35,7 @@ autocmd Filetype rust nnoremap <buffer> <F5>  :!cargo build<CR>
 autocmd Filetype rust nnoremap <buffer> <F6>  :!cargo run<CR>
 autocmd Filetype rust nnoremap <buffer> <F7>  :!cargo test<CR>
 autocmd Filetype rust nnoremap <buffer> <F8>  :!cargo bench<CR>
-
+autocmd Filetype cfg  nnoremap <buffer> <F5>  :!cargo update<CR>
 
 " Plugins Vundle
 " ------------------------------------------------------------------------------
@@ -84,5 +84,4 @@ let g:lightline = {
             \ 'component_function': {
             \   'gitbranch': 'FugitiveHead'
             \ },
-            \ }
-
+        \ }
