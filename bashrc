@@ -23,7 +23,7 @@ shopt -s checkwinsize
 shopt -s globstar
 
 # color support
-alias ls='ls --color=auto'
+alias ls='ls --color=auto -N'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
@@ -40,12 +40,23 @@ alias cd..='cd ..'
 alias echo='echo -e'
 alias mkdir='mkdir -p'
 
+alias dd='dd status=progress'
+alias update='yes | sudo pacman -Syu'
+alias vpn='wg-quick'
+alias df='df -h'
+alias du='du -had 1'
+alias metadata='exiv2'
+alias installed='find /var/lib/pacman/local/ \
+    -mindepth 1 -maxdepth 1 -type d -printf "%TY-%Tm-%Td %TH:%TM %P\n" | sort'
+
+# Git
+alias git-list='git ls-tree -r master --name-only'
+alias git-graph='git log --graph --oneline'
+alias git-count='git shortlog -ens'
+
 # editor
 export EDITOR=vim
 export VISUAL=vim
-
-alias vimrc="$EDITOR ~/.vimrc"
-alias bashrc="$EDITOR ~/.bashrc"
 
 # clipboard
 clipboard()
@@ -58,22 +69,6 @@ clipboard()
     esac
 }
 alias cb='clipboard'
-
-# Git
-alias git-list='git ls-tree -r master --name-only'
-alias git-graph='git log --graph --oneline'
-alias git-count='git shortlog -ens'
-
-gitc()
-{
-    if [ -z "$1" ]; then
-        printf "Usage: %s user/repo\n" "${FUNCNAME[0]}"
-    else
-        git clone "git@github.com:/$1 --recurse-submodules -j$(nproc)"
-    fi
-}
-
-
 
 # pdf
 pdf() { evince "$@" & }
@@ -95,3 +90,6 @@ else
 fi
 
 [[ -z "SSH_CONNECTION" ]] && export PS1="(ssh) $PS1"
+
+# Mbed
+export PATH="$PATH:/home/victor/.config/Mbed Studio/mbed-studio-tools/python/bin"

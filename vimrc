@@ -48,8 +48,8 @@ Plugin 'rust-lang/rust.vim'             "rust
 Plugin 'itchyny/lightline.vim'          "statusline
 Plugin 'tpope/vim-fugitive'             "git integration
 Plugin 'Yggdroot/indentLine'            "indentation guide
-Plugin 'ycm-core/YouCompleteMe'         "autocompletion
-Plugin 'rdnetto/YCM-Generator'          "autocompletion db generator
+"Plugin 'ycm-core/YouCompleteMe'         "autocompletion
+"Plugin 'rdnetto/YCM-Generator'          "autocompletion db generator
 
 "Plugin 'sheerun/vim-wombat-scheme'
 "Plugin 'morhetz/gruvbox'
@@ -61,6 +61,7 @@ filetype plugin indent on
 " YCM
 let g:ycm_confirm_extra_conf = 0
 "let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
 
 " Indentline
 let g:indentLine_char = '▏'
