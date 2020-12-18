@@ -79,40 +79,11 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 # -----------------------------------------------------------------------------
 
-export EDITOR=vim
-export VISUAL=vim
+# zsh
+setopt correct
+setopt correctall
+setopt globdots
+setopt noclobber
 
 # aliases
-alias ls='ls --color=tty -N'
-alias la='ls -A'
-alias lla='ls -lA'
-alias dd='dd status=progress'
-alias update='yes | sudo pacman -Syu'
-alias vpn='wg-quick'
-alias df='df -h'
-alias du='du -had 1'
-alias metadata='exiv2'
-alias installed='find /var/lib/pacman/local/ \
-    -mindepth 1 -maxdepth 1 -type d -printf "%TY-%Tm-%Td %TH:%TM %P\n" | sort'
-
-# clipboard
-function clipboard {
-    case "$1" in
-        'c'|'copy')		wl-copy ;;
-        'p'|'paste')	wl-paste ;;
-        'clear')	    wl-copy -c ;;
-        *)				echo "cliboard copy|paste|clear" ;;
-    esac
-}
-alias cb='clipboard'
-
-# pdf
-function pdf {
-    evince "$@" &
-}
-
-#image
-function image {
-    eog "$@" &
-}
-
+source ~/.bash_aliases
