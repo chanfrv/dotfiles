@@ -21,7 +21,7 @@ ZSH_THEME="victor"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -45,12 +45,12 @@ ZSH_THEME="victor"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -79,15 +79,9 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 # -----------------------------------------------------------------------------
 
-# zsh
-setopt correct
-setopt correctall
-setopt globdots
-setopt noclobber
-
 # Path
 export PATH="$PATH:/opt/GNAT/2020/bin"
-export PATH="$PATH:/home/$USER/.config/Mbed Studio/mbed-studio-tools/python/bin"
+export PATH="$PATH:$HOME/.config/Mbed Studio/mbed-studio-tools/python/bin"
 
 # GCC
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -97,7 +91,6 @@ export EDITOR=vim
 export VISUAL=vim
 
 # Aliases
-alias sudo='sudo ' # make aliases usable by sudo
 alias ls='ls --color=tty -N'
 alias l='ls -F'
 alias la='ls -A'
@@ -109,19 +102,15 @@ alias dd='dd status=progress'
 alias installed='find /var/lib/pacman/local/ \
     -mindepth 1 -maxdepth 1 -type d -printf "%TY-%Tm-%Td %TH:%TM %P\n" | sort'
 
-# systemctl
-alias sc-status='systemctl status'
-alias sc-start='systemctl start'
-alias sc-stop='systemctl stop'
-alias sc-enable='systemctl enable'
-alias sc-disable='systemctl disable'
-
 # reminders
 alias vpn='wg-quick'
-alias format='mkfs.vfat'
 alias metadata='exiv2'
 alias ascii='figlet'
-alias fetch='neofetch'
+alias nf='neofetch'
+alias pt='powertop'
+alias top='gtop'
+alias ippub='curl ifconfig.co'
+alias comp='docker-compose'
 
 function pdf {
     evince "$@" &
@@ -129,4 +118,9 @@ function pdf {
 
 function image {
     eog "$@" &
+}
+
+function whereis {
+    [[ "$1" =~ "([0-9]{1,3}.?){4}$" ]] || return 1
+    curl -s "http://ipwhois.app/json/$1" | python -m json.tool
 }
