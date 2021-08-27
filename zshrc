@@ -1,8 +1,10 @@
+#: Oh my Zsh {{{
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/victor/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -60,28 +62,34 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Disable permission check (/root/.zshrc -> ~/.zshrc)
+# Remove "Insecure completion-dependent directories detected" blablabla.
 ZSH_DISABLE_COMPFIX="true"
+
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM="$ZSH/custom"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-completions
+    zsh-syntax-highlighting
+)
+
+fpath=("$ZSH/custom/functions" $fpath)
 
 source $ZSH/oh-my-zsh.sh
 
-# -----------------------------------------------------------------------------
-# User configuration
-# -----------------------------------------------------------------------------
+#: }}}
+
+#: User configuration {{{
 
 # Path
 export PATH="$PATH:/opt/GNAT/2020/bin"
-export PATH="$PATH:$HOME/.config/Mbed Studio/mbed-studio-tools/python/bin"
 
 # GCC
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -90,19 +98,22 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 export EDITOR=vim
 export VISUAL=vim
 
+# history
+HISTSIZE=10000
+SAVEHIST=10000
+
 # Aliases
 alias ls='ls --color=tty -N'
 alias l='ls -F'
 alias la='ls -A'
 alias lla='ls -lAh'
 
-alias df='df -h'
-alias du='du -had 1'
+alias dfh='df -h'
+alias duh='du -had 1'
 alias dd='dd status=progress'
-alias installed='find /var/lib/pacman/local/ \
-    -mindepth 1 -maxdepth 1 -type d -printf "%TY-%Tm-%Td %TH:%TM %P\n" | sort'
 
 # reminders
+alias installed='pacgraph -c'
 alias vpn='wg-quick'
 alias metadata='exiv2'
 alias ascii='figlet'
@@ -122,5 +133,7 @@ function image {
 
 function whereis {
     [[ "$1" =~ "([0-9]{1,3}.?){4}$" ]] || return 1
-    curl -s "http://ipwhois.app/json/$1" | python -m json.tool
+    curl -s "ipwhois.app/json/$1" | python -m json.tool
 }
+
+#: }}}

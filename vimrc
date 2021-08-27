@@ -1,4 +1,5 @@
-" Misc
+": Vim {{{
+
 set nocompatible
 syntax on
 filetype off
@@ -14,11 +15,14 @@ set autoread
 set ruler
 set ignorecase "case insensitive search/cmds
 set smartcase  "sometimes case sensitive
+set foldmethod=marker
 
 set autoindent
 set smartindent
 set expandtab
 set softtabstop=4 shiftwidth=4 tabstop=4
+
+let &t_ut=''
 
 set listchars=tab:▹\ ,trail:·,precedes:←,extends:→
 set nolist
@@ -37,19 +41,20 @@ autocmd Filetype rust nnoremap <buffer> <F7>  :!cargo test<CR>
 autocmd Filetype rust nnoremap <buffer> <F8>  :!cargo bench<CR>
 autocmd Filetype cfg  nnoremap <buffer> <F5>  :!cargo update<CR>
 
-" Plugins Vundle
-" ------------------------------------------------------------------------------
-" https://aur.archlinux.org/vundle.git
+":}}}
+
+": Vundle - https://aur.archlinux.org/vundle.git {{{
+
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/syntastic'
 Plugin 'rust-lang/rust.vim'             "rust
 Plugin 'itchyny/lightline.vim'          "statusline
 Plugin 'tpope/vim-fugitive'             "git integration
 Plugin 'Yggdroot/indentLine'            "indentation guide
-"Plugin 'ycm-core/YouCompleteMe'         "autocompletion
-"Plugin 'rdnetto/YCM-Generator'          "autocompletion db generator
+Plugin 'JuliaEditorSupport/julia-vim'   "julia
 
 "Plugin 'sheerun/vim-wombat-scheme'
 "Plugin 'morhetz/gruvbox'
@@ -58,10 +63,11 @@ Plugin 'joshdick/onedark.vim'
 call vundle#end()
 filetype plugin indent on
 
-" YCM
-let g:ycm_confirm_extra_conf = 0
-"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " Indentline
 let g:indentLine_char = '▏'
@@ -86,3 +92,5 @@ let g:lightline = {
             \   'gitbranch': 'FugitiveHead'
             \ },
         \ }
+
+": }}}

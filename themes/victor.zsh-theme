@@ -4,7 +4,7 @@
 # |  |_| /   |  / \_/  | 
 #  \/  |/\__/|_/\_/    |/
 
-# Colors
+#: Color functions {{{
 function zsh_theme_rst {
     echo "%{$reset_color%}"
 }
@@ -16,15 +16,15 @@ function zsh_theme_color {
 function zsh_theme_color_bold {
     echo "%{$fg_bold[$1]%}"
 }
+#: }}}
 
-
-# Info
+#: Info functions {{{
 function zsh_theme_username {
-    echo "%(!:$(zsh_theme_color_bold red):$(zsh_theme_color_bold cyan))%n$(zsh_theme_rst)"
+    echo "%(!:$(zsh_theme_color red):$(zsh_theme_color cyan))%n$(zsh_theme_rst)"
 }
 
 function zsh_theme_hostname {
-    echo "$(zsh_theme_color_bold green)%m$(zsh_theme_rst)"
+    echo "$(zsh_theme_color green)%m$(zsh_theme_rst)"
 }
 
 function zsh_theme_directory {
@@ -34,7 +34,7 @@ function zsh_theme_directory {
 function zsh_theme_errcode {
     echo "%(?::$(zsh_theme_color red)%? ↵$(zsh_theme_rst))"
 }
-
+#: }}}
 
 # Prompt
 PROMPT='$(git_prompt_info)$(zsh_theme_username):$(zsh_theme_hostname) $(zsh_theme_directory)> '
