@@ -29,7 +29,7 @@ HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -88,15 +88,12 @@ source $ZSH/oh-my-zsh.sh
 
 #: User configuration {{{
 
-# Path
-export PATH="$PATH:/opt/GNAT/2020/bin"
-
 # GCC
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # editor
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
 
 # history
 HISTSIZE=10000
@@ -122,9 +119,18 @@ alias pt='powertop'
 alias top='gtop'
 alias ippub='curl ifconfig.co'
 alias comp='docker-compose'
+alias vim='nvim'
 
 function pdf {
     evince "$@" &
+}
+
+function pdfmerge {
+    if [ "$#" -lt 3 ]; then
+        echo "Usage: $0 output.pdf input1.pdf input2.pdf..."
+        return 1
+    fi
+    gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="$1" ${@:2}
 }
 
 function image {

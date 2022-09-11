@@ -1,0 +1,6 @@
+[submodule "themes/Nordic"]
+	path = themes/Nordic
+	url = https://github.com/EliverLara/Nordic.git
+[submodule "icons/Tela-icon-theme"]
+	path = icons/Tela-icon-theme
+	url = https://github.com/vinceliuice/Tela-icon-theme.git
